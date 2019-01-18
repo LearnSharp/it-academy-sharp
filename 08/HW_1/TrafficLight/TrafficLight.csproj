@@ -4,7 +4,9 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+
     <ProjectGuid>{C57AC2E4-4229-43EF-BF00-F11F5A74B02A}</ProjectGuid>
+
     <OutputType>Exe</OutputType>
     <RootNamespace>TrafficLight</RootNamespace>
     <AssemblyName>TrafficLight</AssemblyName>

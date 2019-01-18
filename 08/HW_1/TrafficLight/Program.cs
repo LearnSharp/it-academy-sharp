@@ -42,7 +42,9 @@ namespace TrafficLight
         {
             Console.WriteLine("Please, tell me what color is the traffic light?\n(r,y,g)");
             var ReadKey = Console.ReadKey();
+
             CurrentColor = (ControlColor) Convert.ToInt32(ReadKey.KeyChar);
+
             if (CurrentColor == ControlColor.Red)
                 Console.WriteLine(" You said red.");
             else if (CurrentColor == ControlColor.Yellow)
@@ -91,8 +93,9 @@ namespace TrafficLight
         private static bool ChMove
         {
             get => chMove;
-            set
-            {
+
+            set {
+
                 // ReSharper disable once ComplexConditionExpression
                 if (CurrentColor == ControlColor.Red ||
                     CurrentColor == ControlColor.Yellow)
