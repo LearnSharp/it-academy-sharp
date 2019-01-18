@@ -4,12 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-
-    <ProjectGuid>{C57AC2E4-4229-43EF-BF00-F11F5A74B02A}</ProjectGuid>
-
+    <ProjectGuid>{34BF1F7C-C141-4C46-9220-4986280CE741}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TrafficLight</RootNamespace>
-    <AssemblyName>TrafficLight</AssemblyName>
+    <RootNamespace>LoanCalculator</RootNamespace>
+    <AssemblyName>LoanCalculator</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
