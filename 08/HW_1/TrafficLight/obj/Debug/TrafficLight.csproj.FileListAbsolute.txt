@@ -1,0 +1,7 @@
+C:\Users\Сергей\Source\Repos\it-academy-sharp\08\HW_1\TrafficLight\bin\Debug\TrafficLight.exe.config
+C:\Users\Сергей\Source\Repos\it-academy-sharp\08\HW_1\TrafficLight\bin\Debug\TrafficLight.exe
+C:\Users\Сергей\Source\Repos\it-academy-sharp\08\HW_1\TrafficLight\bin\Debug\TrafficLight.pdb
+C:\Users\Сергей\Source\Repos\it-academy-sharp\08\HW_1\TrafficLight\obj\Debug\TrafficLight.csprojAssemblyReference.cache
+C:\Users\Сергей\Source\Repos\it-academy-sharp\08\HW_1\TrafficLight\obj\Debug\TrafficLight.csproj.CoreCompileInputs.cache
+C:\Users\Сергей\Source\Repos\it-academy-sharp\08\HW_1\TrafficLight\obj\Debug\TrafficLight.exe
+C:\Users\Сергей\Source\Repos\it-academy-sharp\08\HW_1\TrafficLight\obj\Debug\TrafficLight.pdb
