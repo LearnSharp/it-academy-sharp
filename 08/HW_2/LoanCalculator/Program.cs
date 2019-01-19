@@ -1,109 +1,62 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using static System.Decimal;
 
 namespace LoanCalculator
 {
-    class Program
+    internal class Program
     {
-        private static int[][] months;
-        private static int day;
+        private static int[][] months; // Годовой массив месяцы/дни
 
-        //private enum MonthsNames
-        //{
-        //    January,
-        //    February,
-        //    March,
-        //    April,
-        //    May,
-        //    June,
-        //    July,
-        //    August,
-        //    September,
-        //    October,
-        //    November,
-        //    December
-        //}
+        private static readonly decimal[] monthlyInterestPayableArray =
+            new decimal[12]; // Накопительный массив месячных выплат
 
-        private static decimal[] monthlyInterestPayableArray = new decimal[12];
+        private static readonly string[] monthNames =
+            CultureInfo.CurrentCulture.DateTimeFormat
+                       .MonthNames; // Месяцы по именам
 
+        private static decimal LoanAmount;   // Сумма кредита
+        private static decimal LoanInterest; // Годовая процентная ставка
+        private static decimal TotalAmount;  // Полные выплаты по кредиту
+        private static decimal loanBody;     // Тело кредита
 
-        private static string[] monthNames =
-            CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
-
-        public static void ColRow()
+        /// <summary>
+        ///     Создание годового массива месяцы/дни
+        /// </summary>
+        private static void ColRow()
         {
             months = new int[12][];
             for (var i = 0; i < 12; i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        months[i] = new int[31];
-                        break;
-                    case 1:
-                        months[i] =
-                            new int[28]; //This may not always be true...  Leap Year every 4 years
-                        break;
-                    case 2:
-                        months[i] = new int[31];
-                        break;
-                    case 3:
-                        months[i] = new int[30];
-                        break;
-                    case 4:
-                        months[i] = new int[31];
-                        break;
-                    case 5:
-                        months[i] = new int[30];
-                        break;
-                    case 6:
-                        months[i] = new int[31];
-                        break;
-                    case 7:
-                        months[i] = new int[31];
-                        break;
-                    case 8:
-                        months[i] = new int[30];
-                        break;
-                    case 9:
-                        months[i] = new int[31];
-                        break;
-                    case 10:
-                        months[i] = new int[30];
-                        break;
-                    case 11:
-                        months[i] = new int[31];
-                        break;
-                }
-            }
+                if (i == 0)
+                    months[i] = new int[31];
+                else if (i == 1) months[i] = new int[28];
+                else if (i == 2) months[i] = new int[31];
+                else if (i == 3) months[i] = new int[30];
+                else if (i == 4) months[i] = new int[31];
+                else if (i == 5) months[i] = new int[30];
+                else if (i == 6) months[i] = new int[31];
+                else if (i == 7) months[i] = new int[31];
+                else if (i == 8) months[i] = new int[30];
+                else if (i == 9) months[i] = new int[31];
+                else if (i == 10) months[i] = new int[30];
+                else if (i == 11) months[i] = new int[31];
 
-            var dayInYear = 1;
-            for (var thisMonth = 0; thisMonth < months.Count(); thisMonth++)
+            for (int currentMonth = 0, dayInYear = 1;
+                 currentMonth < months.Count();
+                 currentMonth++)
             {
-                for (day = 0; day < months[thisMonth].Count(); day++)
+                for (var day = 0; day < months[currentMonth].Count(); day++)
                 {
-                    months[thisMonth][day] = dayInYear;
+                    months[currentMonth][day] = dayInYear;
                     dayInYear++;
                 }
             }
         }
 
-
-        //private static MonthsNames CurrentMonth = MonthsNames.January;
-
-        private static decimal LoanAmount = 0;
-        private static decimal LoanInterest = 0;
-
-        private static decimal TotalAmount = 0;
-
         /// <summary>
-        /// Вводимые значения ограничиваются только цифрами
+        ///     Вводимые значения ограничиваются только цифрами
         /// </summary>
         /// <param name="str">число в строковом виде</param>
         /// <param name="decimalVar">результат тип decimal</param>
@@ -130,56 +83,88 @@ namespace LoanCalculator
         }
 
         /// <summary>
-        /// Представление ввода
+        ///     Представление ввода
         /// </summary>
         private static void InputView()
         {
-            Console.WriteLine("Enter loan amount: ");
+            Console.WriteLine("Enter loan amount (rub): ");
             var str = Console.ReadLine();
             EnterDecimal(str, out LoanAmount);
 
-            Console.WriteLine("Enter loan interest: ");
+            Console.WriteLine("Enter loan interest (%): ");
             str = Console.ReadLine();
             EnterDecimal(str, out LoanInterest);
         }
 
         /// <summary>
-        /// Представление вывода
+        ///     Представление вывода дифференциальных платежей
         /// </summary>
-        private static void OutputView()
+        private static void OutputDifferentView()
         {
-            Console.WriteLine("Monthly Payments:");
-            var iter = 0;
+            Console.WriteLine("\nMonthly differentiated payments:\n");
+            var iterator = 0;
+            TotalAmount = 0;
             foreach (var monthlyInterestPayable in monthlyInterestPayableArray)
             {
-                Console.WriteLine(monthNames[iter++] + "\t\t{0:f2}",
-                                  monthlyInterestPayable);
-                TotalAmount += monthlyInterestPayable;
+                Console.WriteLine(monthNames[iterator++].PadRight(10)
+                                  + "\t{0:f2} rub",
+                                  monthlyInterestPayable + loanBody);
+                TotalAmount += monthlyInterestPayable + loanBody;
             }
 
-            Console.WriteLine("The total amount of payments will be: {0:f2} rub",
+            Console.WriteLine("\nThe total amount of payments will be: {0:f2} rub",
                               TotalAmount);
         }
 
         /// <summary>
-        /// Контроллер бизнес логики приложения
+        ///     Представление вывода аннуитетных платежей
+        /// </summary>
+        private static void OutputAnnuityView()
+        {
+            Console.WriteLine("\nMonthly annuity payments:\n");
+
+            var li = LoanInterest / 12 / 100;
+            var x = Convert.ToDouble(1 + li);
+            var tmp = Convert.ToDecimal(Math.Pow(x, 12));
+            // ReSharper disable once ComplexConditionExpression
+            var KS = li * tmp * LoanAmount / (tmp - 1);
+
+            var iterator = 0;
+            TotalAmount = 0;
+            for (var i = 0; i < 12; i++)
+            {
+                Console.WriteLine(monthNames[iterator++].PadRight(10)
+                                  + "\t{0:f2} rub", KS);
+                TotalAmount += KS;
+            }
+
+            Console.WriteLine("\nThe total amount of payments will be: {0:f2} rub",
+                              TotalAmount);
+        }
+
+        /// <summary>
+        ///     Контроллер бизнес логики приложения
         /// </summary>
         private static void LogicController()
         {
             InputView();
             ColRow();
 
-            decimal loanBody =
-                LoanAmount / monthNames.Count();
+            loanBody =
+                LoanAmount / (monthNames.Length - 1);
 
-            for (int i = 0; i < 12; i++)
+            var subtotal = LoanAmount;
+            for (var i = 0; i < 12; i++)
             {
+                var decrement = i == 0 ? 0 : loanBody;
+                subtotal -= decrement;
+                // ReSharper disable once ComplexConditionExpression
                 monthlyInterestPayableArray[i] =
-                    (LoanAmount - loanBody) * LoanInterest / 365 *
-                    months[i].Count();
+                    subtotal * (LoanInterest / 100) / 365 * months[i].Count();
             }
 
-            OutputView();
+            OutputDifferentView();
+            OutputAnnuityView();
         }
 
         private static void Main(string[] args)
