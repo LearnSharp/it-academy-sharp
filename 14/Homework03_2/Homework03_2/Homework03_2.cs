@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Homework03_2
 {
-    class Program
+    class Homework03_2
     {
         //Переход дороги по регулируемому пешеходному переходу
 

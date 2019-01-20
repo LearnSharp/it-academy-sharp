@@ -15,7 +15,7 @@ namespace Homework03_1
 
      */
 
-    class Program
+    class Homework03_1
     {
         static void Main(string[] args)
         {
