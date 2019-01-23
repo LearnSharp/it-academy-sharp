@@ -25,6 +25,7 @@ namespace LoanCalculator
         /// <summary>
         ///     Создание годового массива месяцы/дни
         /// </summary>
+        // ReSharper disable once ExcessiveIndentation
         private static void ColRow()
         {
             months = new int[12][];
@@ -66,10 +67,8 @@ namespace LoanCalculator
             {
                 if (str != null && Regex.IsMatch(str, "^\\d+(\\.\\d+)?$"))
                 {
-                    //Console.WriteLine("on input received: {0}", str);
                     str = str.Replace('.', ',');
                     TryParse(str, out decimalVar);
-                    //Console.WriteLine("received: {0}", decimalVar);
                 }
                 else
                 {
@@ -158,7 +157,6 @@ namespace LoanCalculator
             {
                 var decrement = i == 0 ? 0 : loanBody;
                 subtotal -= decrement;
-                // ReSharper disable once ComplexConditionExpression
                 monthlyInterestPayableArray[i] =
                     subtotal * (LoanInterest / 100) / 365 * months[i].Count();
             }
@@ -167,7 +165,7 @@ namespace LoanCalculator
             OutputAnnuityView();
         }
 
-        private static void Main(string[] args)
+        private static void Main()
         {
             LogicController();
         }
