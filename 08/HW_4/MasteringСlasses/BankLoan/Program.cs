@@ -16,30 +16,64 @@ namespace BankLoan
 
         public class PaymentLoan
         {
-            public PaymentLoan(DateTime dateOfPayment, decimal sumPayment)
+            internal struct SeparatePayment
             {
-                DateOfPayment = dateOfPayment;
-                SumPayment = sumPayment;
+                public DateTime DateOfPayment { get; internal set; }
+                public decimal SumPayment { get; internal set; }
             }
 
-            public DateTime DateOfPayment { get; set; }
-            public decimal SumPayment { get; set; }
+            private List<SeparatePayment> PaymentList { get; }
+
+            public PaymentLoan()
+            {
+                var pmtList = new List<SeparatePayment>();
+                PaymentList = pmtList;
+            }
+
+            private delegate void Message(string strDate, decimal sumPayment);
+
+            public void AddPayment(string strDate, decimal sumPayment)
+            {
+                AddPayment(strDate, sumPayment, false);
+            }
+
+            public void AddPayment(string strDate, decimal sumPayment, bool ifMessage)
+            {
+                var dateOfPayment = Convert.ToDateTime(strDate);
+                var separatePayment = new SeparatePayment
+                    {DateOfPayment = dateOfPayment, SumPayment = sumPayment};
+                PaymentList.Add(separatePayment);
+                Message message = MessageOfPayment;
+                if (ifMessage) message(strDate, sumPayment);
+            }
+            
+            public decimal TotalPayment
+            {
+                get
+                {
+                    if (PaymentList.Count == 0) return 0;
+                    var total = PaymentList.Sum(x => x.SumPayment);
+                    return total;
+                }
+            }
+
+            private static void MessageOfPayment(string strDate, decimal sumPayment)
+            {
+
+                Console.WriteLine("{0} you payment in the amount of $ {1} was made", strDate, sumPayment);
+            }
         }
 
         internal class Customer
         {
             public string Name { get; set; }
-
-            public List<PaymentLoan> PaymentList { get; set; }
-
-            public string RepaymentService(decimal amount, decimal payment)
+            public decimal RepaymentService(decimal amount, ref PaymentLoan pmtLoan , decimal payment)
             {
-                var total = PaymentList.Sum(x => x.SumPayment);
+                var total = pmtLoan.TotalPayment;
+                pmtLoan.AddPayment(DateTime.Now.ToString("dd.MM.yyy"), payment, true);
                 total += payment;
-                var balance = amount - total;
-                var str = balance.ToString(CultureInfo.InvariantCulture);
 
-                return str;
+                return amount - total;
             }
         }
 
@@ -47,8 +81,7 @@ namespace BankLoan
         {
             var customer = new Customer
             {
-                Name = "John Doe",
-                PaymentList = new List<PaymentLoan>(),
+                Name = "John Doe"
             };
 
             var receivedLoan = new ReceivedLoan
@@ -57,17 +90,18 @@ namespace BankLoan
                 TotalLoan = 1000,
             };
 
-            var paymentLoan =
-                new PaymentLoan(Convert.ToDateTime("17.01.2020"), 100);
-            customer.PaymentList.Add(paymentLoan);
 
-            var paymentLoan1 =
-                new PaymentLoan(Convert.ToDateTime("19.01.2020"), 200);
-            customer.PaymentList.Add(paymentLoan1);
+            var payment = new PaymentLoan();
 
-            var str = customer.RepaymentService(receivedLoan.TotalLoan, 50);
+            payment.AddPayment("17.01.2020",100, true);
+            payment.AddPayment("17.01.2020", 200, true);
 
-            Console.WriteLine("result = " + str);
+            payment.AddPayment("18.01.2020", 300, true);
+            payment.AddPayment("19.01.2020", 400, true);
+
+            var balance = customer.RepaymentService(receivedLoan.TotalLoan, ref payment, 50);
+
+            Console.WriteLine("Your loan balance = {0}", balance);
         }
     }
 }
