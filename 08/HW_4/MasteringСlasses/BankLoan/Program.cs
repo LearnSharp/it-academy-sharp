@@ -32,12 +32,14 @@ namespace BankLoan
 
             private delegate void Message(string strDate, decimal sumPayment);
 
+
             public void AddPayment(string strDate, decimal sumPayment)
             {
                 AddPayment(strDate, sumPayment, false);
             }
 
-            public void AddPayment(string strDate, decimal sumPayment, bool ifMessage)
+            public void AddPayment(string strDate, decimal sumPayment,
+                                   bool ifMessage = true)
             {
                 var dateOfPayment = Convert.ToDateTime(strDate);
                 var separatePayment = new SeparatePayment
@@ -46,7 +48,7 @@ namespace BankLoan
                 Message message = MessageOfPayment;
                 if (ifMessage) message(strDate, sumPayment);
             }
-            
+
             public decimal TotalPayment
             {
                 get
@@ -57,49 +59,45 @@ namespace BankLoan
                 }
             }
 
-            private static void MessageOfPayment(string strDate, decimal sumPayment)
+            private static void MessageOfPayment(
+                string strDate, decimal sumPayment)
             {
-
-                Console.WriteLine("{0} you payment in the amount of $ {1} was made", strDate, sumPayment);
+                Console
+                    .WriteLine("{0} you payment in the amount of $ {1} was made",
+                               strDate, sumPayment);
             }
         }
 
         internal class Customer
         {
             public string Name { get; set; }
-            public decimal RepaymentService(decimal amount, ref PaymentLoan pmtLoan , decimal payment)
-            {
-                var total = pmtLoan.TotalPayment;
-                pmtLoan.AddPayment(DateTime.Now.ToString("dd.MM.yyy"), payment, true);
-                total += payment;
 
-                return amount - total;
-            }
+            public decimal
+                GetBalance(ReceivedLoan amount, PaymentLoan pmtLoan) =>
+                amount.TotalLoan - pmtLoan.TotalPayment;
         }
 
         private static void Main()
         {
-            var customer = new Customer
-            {
-                Name = "John Doe"
-            };
+            var customer = new Customer();
+            customer.Name = "John Doe";
 
             var receivedLoan = new ReceivedLoan
             {
                 DateOfReceiving = Convert.ToDateTime("01.01.2020"),
-                TotalLoan = 1000,
+                TotalLoan = 1000
             };
-
 
             var payment = new PaymentLoan();
 
-            payment.AddPayment("17.01.2020",100, true);
-            payment.AddPayment("17.01.2020", 200, true);
-
-            payment.AddPayment("18.01.2020", 300, true);
+            payment.AddPayment("17.01.2020", 100, true);
+            payment.AddPayment("17.01.2020", 200);
+            payment.AddPayment("18.01.2020", 300);
             payment.AddPayment("19.01.2020", 400, true);
+            payment.AddPayment("18.01.2020", 50);
 
-            var balance = customer.RepaymentService(receivedLoan.TotalLoan, ref payment, 50);
+            var balance =
+                customer.GetBalance(receivedLoan, payment);
 
             Console.WriteLine("Your loan balance = {0}", balance);
         }
