@@ -30,9 +30,6 @@ namespace BankLoan
                 PaymentList = pmtList;
             }
 
-            private delegate void Message(string strDate, decimal sumPayment);
-
-
             public void AddPayment(string strDate, decimal sumPayment)
             {
                 AddPayment(strDate, sumPayment, false);
@@ -45,8 +42,26 @@ namespace BankLoan
                 var separatePayment = new SeparatePayment
                     {DateOfPayment = dateOfPayment, SumPayment = sumPayment};
                 PaymentList.Add(separatePayment);
-                Message message = MessageOfPayment;
-                if (ifMessage) message(strDate, sumPayment);
+                if (ifMessage)
+                    Console.WriteLine(MessageOfPayment(strDate, sumPayment));
+            }
+
+            public void PrintListOfPayment()
+            {
+                var len = 0;
+                foreach (var pmt in PaymentList)
+                {
+                    var s =
+                        MessageOfPayment(pmt.DateOfPayment.ToShortDateString(),
+                                         pmt.SumPayment);
+                    if (s.Length > len) len = s.Length;
+                    Console.WriteLine(s);
+                }
+
+                Console.WriteLine(string.Concat(Enumerable.Repeat("-", len)));
+                Console
+                    .WriteLine("Total payments received in the amount of: {0}=",
+                               TotalPayment);
             }
 
             public decimal TotalPayment
@@ -59,13 +74,10 @@ namespace BankLoan
                 }
             }
 
-            private static void MessageOfPayment(
-                string strDate, decimal sumPayment)
-            {
-                Console
-                    .WriteLine("{0} you payment in the amount of $ {1} was made",
-                               strDate, sumPayment);
-            }
+            private static string MessageOfPayment(
+                string strDate, decimal sumPayment) =>
+                strDate + " you payment in the amount of " + sumPayment +
+                " was made.";
         }
 
         internal class Customer
@@ -75,6 +87,25 @@ namespace BankLoan
             public decimal
                 GetBalance(ReceivedLoan amount, PaymentLoan pmtLoan) =>
                 amount.TotalLoan - pmtLoan.TotalPayment;
+
+            public void MessageStatement(ReceivedLoan amount,
+                                         PaymentLoan pmtLoan)
+            {
+                Console.WriteLine("The amount of your loan {0}, received {1}",
+                                  amount.TotalLoan, amount.DateOfReceiving);
+                Console.WriteLine(string.Concat(Enumerable.Repeat("*", 15)));
+                pmtLoan.PrintListOfPayment();
+                var balance = amount.TotalLoan - pmtLoan.TotalPayment;
+                var output = "The balance of your account as of " +
+                             DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss") +
+                             " is: " +
+                             balance.ToString(CultureInfo.InvariantCulture) +
+                             "=";
+                Console.WriteLine(string.Concat(Enumerable.Repeat("-",
+                                                                  output
+                                                                      .Length)));
+                Console.WriteLine(output);
+            }
         }
 
         private static void Main()
@@ -90,16 +121,14 @@ namespace BankLoan
 
             var payment = new PaymentLoan();
 
-            payment.AddPayment("17.01.2020", 100, true);
+            payment.AddPayment("17.01.2020", 100);
             payment.AddPayment("17.01.2020", 200);
             payment.AddPayment("18.01.2020", 300);
-            payment.AddPayment("19.01.2020", 400, true);
+            payment.AddPayment("19.01.2020", 400);
             payment.AddPayment("18.01.2020", 50);
 
-            var balance =
-                customer.GetBalance(receivedLoan, payment);
-
-            Console.WriteLine("Your loan balance = {0}", balance);
+            customer.MessageStatement(receivedLoan, payment);
+            Console.WriteLine();
         }
     }
 }
