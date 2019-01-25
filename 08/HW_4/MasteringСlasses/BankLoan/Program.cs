@@ -105,6 +105,21 @@ namespace BankLoan
                                                                   output
                                                                       .Length)));
                 Console.WriteLine(output);
+                if (balance > 0)
+                {
+                    Console.WriteLine("You must bank {0} =", balance);
+                }
+                else if (balance < 0)
+                {
+                    Console.WriteLine("The bank has a debt of {0} to you =",
+                                      -balance);
+                }
+                else if (balance == 0)
+                {
+                    Console.WriteLine("Your account balance is 0 =. " +
+                                      "There are no mutual obligations between " +
+                                      "you and the bank.");
+                }
             }
         }
 
