@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankLoan", "BankLoan\BankLo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConversion", "CurrencyConversion\CurrencyConversion.csproj", "{C9E63BD6-AEEA-4A6A-81C3-5A47887FADF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recursion", "Recursion\Recursion.csproj", "{BD56C250-50FB-4A82-995F-A2E501C9EAB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C9E63BD6-AEEA-4A6A-81C3-5A47887FADF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E63BD6-AEEA-4A6A-81C3-5A47887FADF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9E63BD6-AEEA-4A6A-81C3-5A47887FADF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD56C250-50FB-4A82-995F-A2E501C9EAB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD56C250-50FB-4A82-995F-A2E501C9EAB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD56C250-50FB-4A82-995F-A2E501C9EAB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD56C250-50FB-4A82-995F-A2E501C9EAB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
