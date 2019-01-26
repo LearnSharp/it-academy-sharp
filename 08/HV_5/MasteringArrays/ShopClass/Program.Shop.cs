@@ -37,7 +37,7 @@ namespace ShopClass
                 Articles.Add(article);
             }
 
-            public void GetArticles()
+            private void GetArticles()
             {
                 if (!Articles.Any()) return;
                 Console.WriteLine("Introduced articles:\n"
@@ -53,6 +53,40 @@ namespace ShopClass
                 }
 
                 Console.WriteLine("\n".PadRight(20, '\u2500'));
+            }
+
+            // ReSharper disable once UnusedMember.Global
+            // ReSharper disable once UnusedMember.Local
+            public void ShopAllView()
+            {
+                Console.WriteLine("\n".PadRight(20, '\u2500'));
+                GetArticles();
+            }
+
+            private static void GetItemView(IEnumerable fnd)
+            {
+                if (fnd == null) return;
+                Console.WriteLine("\nSearch completed:\t");
+                foreach (var item in fnd) Console.Write("{0} ", item);
+
+                Console.WriteLine();
+            }
+
+            public void ShopFindByIndex()
+            {
+                Console.Write("Enter the product Index in the store list: ");
+                EnterDecimal(Console.ReadLine(), out var num);
+                var fnd = GetArticleByIndex(Convert.ToInt16(num));
+                if (fnd != null) GetItemView(fnd);
+                else Console.WriteLine("Search returned no results.");
+            }
+
+            public void ShopFindByName()
+            {
+                Console.Write("Enter the product Name in the store list: ");
+                var fnd = GetArticleByName(Console.ReadLine());
+                if (fnd != null) GetItemView(fnd);
+                else Console.WriteLine("Search returned no results.");
             }
         }
     }
