@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Arrays
 {
@@ -59,7 +57,7 @@ namespace Arrays
                 var str = Convert.ToString(b[rnd.Next(10)]) +
                           Convert.ToString(d[rnd.Next(10)]);
                 var t = int.Parse(str);
-                System.Threading.Thread.Sleep(5);
+                Thread.Sleep(5);
                 Console.Write("\u2500\u2500");
                 dim[i] = t;
             }
@@ -69,10 +67,7 @@ namespace Arrays
 
         private static void View(int[] dim)
         {
-            foreach (var item in dim)
-            {
-                Console.Write("{0} ", item);
-            }
+            foreach (var item in dim) Console.Write("{0} ", item);
 
             Console.WriteLine("\nMax value = {0}, Min value = {1}", dim.Max(),
                               dim.Min());
@@ -81,20 +76,15 @@ namespace Arrays
                               dim.Average());
             Console.WriteLine("All odd array values:");
             foreach (var item in dim)
-            {
                 if (item % 2 != 0)
-                {
                     Console.Write("{0} ", item);
-                }
-            }
+            Console.WriteLine();
         }
 
         private static void Main()
         {
             CreateRandomDim(out var dim);
             View(dim);
-
-            Console.WriteLine();
         }
     }
 }
