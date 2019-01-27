@@ -28,9 +28,13 @@ namespace MusicPlayer
 
             var UserInput = Console.ReadKey(true);
 
-            if (char.IsDigit(UserInput.KeyChar))
+            if (UserInput.Key == ConsoleKey.Escape ||
+                char.IsDigit(UserInput.KeyChar))
             {
-                var answerId = int.Parse(UserInput.KeyChar.ToString());
+                var answerId = UserInput.Key == ConsoleKey.Escape
+                    ? 0
+                    : int.Parse(UserInput.KeyChar.ToString());
+
                 if (Menus.ContainsKey(answerId))
                     return new KeyValuePair<int, MenuItem>
                         (answerId, Menus[answerId]);

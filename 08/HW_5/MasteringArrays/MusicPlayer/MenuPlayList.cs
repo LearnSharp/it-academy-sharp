@@ -15,7 +15,7 @@ namespace MusicPlayer
                 {3, new MenuItem {Text = "Play list forward"}},
                 {4, new MenuItem {Text = "Play list back"}},
                 {5, new MenuItem {Text = "Play list random"}},
-                {0, new MenuItem {Text = "Exit"}}
+                {0, new MenuItem {Text = "Exit (Esc)"}}
             };
 
         /// <summary>
