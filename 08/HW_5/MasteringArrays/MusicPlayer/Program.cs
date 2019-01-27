@@ -20,6 +20,7 @@ namespace MusicPlayer
         public virtual IState RunState()
         {
             var option = ReadOption();
+            Console.Clear();
             return NextState(option);
         }
 
@@ -42,10 +43,12 @@ namespace MusicPlayer
                 if (Menus.ContainsKey(answerId))
                     return new KeyValuePair<int, MenuItem>(answerId,
                                                            Menus[answerId]);
+                Console.Clear();
                 Console.WriteLine("Selected item not exists.");
                 return ReadOption();
             }
 
+            Console.Clear();
             Console.WriteLine("Selected item not a number.");
             return ReadOption();
         }
@@ -56,6 +59,9 @@ namespace MusicPlayer
 
     public class MenuState1 : MenuState
     {
+        /// <summary>
+        /// Creating list of menu
+        /// </summary>
         protected override Dictionary<int, MenuItem> Menus { get; } =
             new Dictionary<int, MenuItem>
             {
@@ -65,6 +71,12 @@ namespace MusicPlayer
                 {4, new MenuItem {Text = "Exit"}}
             };
 
+
+        /// <summary>
+        /// Actions when selecting a menu item with a specific number
+        /// </summary>
+        /// <param name="selectedMenu">Specific number point menu</param>
+        /// <returns></returns>
         protected override IState NextState(
             KeyValuePair<int, MenuItem> selectedMenu)
         {
@@ -86,6 +98,8 @@ namespace MusicPlayer
 
             Console.WriteLine($"Hello, {login}");
 
+            Console.ReadLine();
+            Console.Clear();
             return new MenuState1();
         }
     }
@@ -120,11 +134,23 @@ namespace MusicPlayer
         {
             var menuState = new ConfigurableMenuState();
             menuState.AddMenuItem(1, new MenuItem {Text = "Option 1"},
-                                  () => menuState);
+                                  () => new AuthState());
             menuState.AddMenuItem(2, new MenuItem {Text = "Exit"},
                                   () => null);
 
             IState startState = menuState;
+            while (startState != null) startState = startState.RunState();
+        }
+
+        private static void Test1()
+        {
+            IState startState = new AuthState();
+            while (startState != null) startState = startState.RunState();
+        }
+
+        private static void Test2()
+        {
+            IState startState = new MenuState1();
             while (startState != null) startState = startState.RunState();
         }
 
