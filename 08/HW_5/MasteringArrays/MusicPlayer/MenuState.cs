@@ -26,20 +26,18 @@ namespace MusicPlayer
             Console.WriteLine("Please, select option:");
             ShowMenu();
 
-            var str = Console.ReadLine();
+            var UserInput = Console.ReadKey(true);
 
-            if (int.TryParse(str, out var answerId))
+            if (char.IsDigit(UserInput.KeyChar))
             {
+                var answerId = int.Parse(UserInput.KeyChar.ToString());
                 if (Menus.ContainsKey(answerId))
-                    return new KeyValuePair<int, MenuItem>(answerId,
-                                                           Menus[answerId]);
-                Console.Clear();
-                Console.WriteLine("Selected item not exists.");
-                return ReadOption();
+                    return new KeyValuePair<int, MenuItem>
+                        (answerId, Menus[answerId]);
             }
 
             Console.Clear();
-            Console.WriteLine("Selected item not a number.");
+            Console.WriteLine("Selected item not exists, repeat your choice.");
             return ReadOption();
         }
 

@@ -14,7 +14,7 @@ namespace MusicPlayer
                 {2, new MenuItem {Text = "Play"}},
                 {3, new MenuItem {Text = "Next"}},
                 {4, new MenuItem {Text = "Play List"}},
-                {5, new MenuItem {Text = "Exit"}}
+                {0, new MenuItem {Text = "Exit"}}
             };
 
 
@@ -26,7 +26,7 @@ namespace MusicPlayer
         protected override IState NextState(
             KeyValuePair<int, MenuItem> selectedMenu)
         {
-            if (selectedMenu.Key == 5) return null;
+            if (selectedMenu.Key == 0) return null;
             if (selectedMenu.Key == 1) return new PreviousState();
             if (selectedMenu.Key == 2) return new PlayState();
             if (selectedMenu.Key == 3) return new NextState();
