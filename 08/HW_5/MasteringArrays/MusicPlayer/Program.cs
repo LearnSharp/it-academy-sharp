@@ -1,7 +1,11 @@
-﻿namespace MusicPlayer
+﻿using System;
+using System.Threading;
+
+namespace MusicPlayer
 {
     internal class Program
     {
+
         //private static void Test()
         //{
         //    var menuState = new ConfigurableMenuState();

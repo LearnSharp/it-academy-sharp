@@ -5,7 +5,7 @@ namespace MusicPlayer
     public class MenuPlayList : MenuState
     {
         /// <summary>
-        /// Creating list of menu
+        ///     Creating list of menu
         /// </summary>
         protected override Dictionary<int, MenuItem> Menus { get; } =
             new Dictionary<int, MenuItem>
@@ -19,7 +19,7 @@ namespace MusicPlayer
             };
 
         /// <summary>
-        /// Actions when selecting a menu item with a specific number
+        ///     Actions when selecting a menu item with a specific number
         /// </summary>
         /// <param name="selectedMenu">Specific number point menu</param>
         /// <returns></returns>
