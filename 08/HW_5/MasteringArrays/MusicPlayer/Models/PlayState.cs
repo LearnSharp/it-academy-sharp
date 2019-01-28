@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
-using static MusicPlayer.Program;
+using MusicPlayer.Interface;
 
-namespace MusicPlayer
+namespace MusicPlayer.Models
 {
     public class PlayState : IState
     {
@@ -10,12 +10,15 @@ namespace MusicPlayer
         {
             Console.WriteLine("***PlayState: ***\n");
 
-            var tmpArray = PlaySonglist.GetSongByIndex(0).ToArray();
-            var songTitle = tmpArray.GetValue(0).ToString();
-            var timeSong = tmpArray.GetValue(1).ToString();
-            ProgressPlay(songTitle, timeSong);
-
-            Console.WriteLine();
+            for (var i = 0; i < Program.PlaySonglist.GetPlaylistCount(); i++)
+            {
+                var tmpArray = Program.PlaySonglist.GetSongByIndex(i).ToArray();
+                var songTitle = tmpArray.GetValue(0).ToString();
+                var timeSong = tmpArray.GetValue(1).ToString();
+                ProgressPlay(songTitle, timeSong);
+            }
+            
+            Console.WriteLine("Press any key to return to the main menu.");
             Console.ReadLine();
             Console.Clear();
             return new MenuStateGlobal();
@@ -37,7 +40,7 @@ namespace MusicPlayer
                     Thread.Sleep(1000);
                 }
 
-                progress.WriteLine(" .. Done.");
+                progress.WriteLine(" .. Done.\n");
             }
         }
     }

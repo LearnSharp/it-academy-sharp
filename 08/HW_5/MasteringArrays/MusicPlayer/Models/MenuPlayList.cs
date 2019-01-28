@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using MusicPlayer.Interface;
 
-namespace MusicPlayer
+namespace MusicPlayer.Models
 {
     public class MenuPlayList : MenuState
     {

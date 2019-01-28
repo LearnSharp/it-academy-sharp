@@ -1,4 +1,4 @@
-﻿namespace MusicPlayer
+﻿namespace MusicPlayer.Interface
 {
     public interface IState
     {

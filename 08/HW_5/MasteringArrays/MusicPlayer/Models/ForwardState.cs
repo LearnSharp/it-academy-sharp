@@ -1,6 +1,7 @@
 ﻿using System;
+using MusicPlayer.Interface;
 
-namespace MusicPlayer
+namespace MusicPlayer.Models
 {
     public class ForwardState : IState
     {
