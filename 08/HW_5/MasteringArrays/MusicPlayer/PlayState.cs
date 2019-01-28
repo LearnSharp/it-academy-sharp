@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using static MusicPlayer.Program;
 
 namespace MusicPlayer
 {
@@ -8,10 +9,11 @@ namespace MusicPlayer
         IState IState.RunState()
         {
             Console.WriteLine("***PlayState: ***\n");
-            ProgressPlay("Kino", "00:00:20");
 
-
-
+            var tmpArray = PlaySonglist.GetSongByIndex(0).ToArray();
+            var songTitle = tmpArray.GetValue(0).ToString();
+            var timeSong = tmpArray.GetValue(1).ToString();
+            ProgressPlay(songTitle, timeSong);
 
             Console.WriteLine();
             Console.ReadLine();
@@ -25,14 +27,16 @@ namespace MusicPlayer
             {
                 Console.WriteLine("Playing composition:\n" + nameSong + " ");
                 var timeSong = Convert.ToDateTime(timeSongString);
-                var longSong = timeSong.Hour * 3600 + timeSong.Minute * 60 + timeSong.Second;
+                var longSong = timeSong.Hour * 3600 + timeSong.Minute * 60 +
+                               timeSong.Second;
                 Console.WriteLine(" long Song = {0} sec.", longSong);
                 var i = 0;
                 while (i++ <= longSong)
                 {
-                    progress.Report((double)i / longSong);
+                    progress.Report((double) i / longSong);
                     Thread.Sleep(1000);
                 }
+
                 progress.WriteLine(" .. Done.");
             }
         }
