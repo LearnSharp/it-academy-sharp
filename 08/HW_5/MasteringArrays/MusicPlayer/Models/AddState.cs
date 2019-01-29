@@ -1,7 +1,7 @@
 ﻿using System;
-using static MusicPlayer.Program;
+using MusicPlayer.Interface;
 
-namespace MusicPlayer
+namespace MusicPlayer.Models
 {
     public class AddState : IState
     {
@@ -14,7 +14,7 @@ namespace MusicPlayer
             {
                 var song = new Song();
                 song.RecordSong();
-                PlaySonglist.AddPlaylist(song);
+                Program.PlaySonglist.AddSongPlaylist(song);
 
                 Console.WriteLine("\nContinue entering?\nPress any key " +
                                   "for continue or Esc for exit.\n");

@@ -1,4 +1,4 @@
-﻿namespace MusicPlayer
+﻿namespace MusicPlayer.Models
 {
     public class MenuItem
     {

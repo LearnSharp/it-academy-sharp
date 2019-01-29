@@ -1,12 +1,13 @@
 ﻿using System;
+using MusicPlayer.Interface;
 
-namespace MusicPlayer
+namespace MusicPlayer.Models
 {
-    public class BackState : IState
+    public class DeleteState : IState
     {
         IState IState.RunState()
         {
-            Console.WriteLine("***BackState: ***");
+            Console.WriteLine("***DeleteState: ***");
 
             Console.ReadLine();
             Console.Clear();

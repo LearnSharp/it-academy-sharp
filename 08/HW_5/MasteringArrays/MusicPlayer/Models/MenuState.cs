@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using MusicPlayer.Interface;
 
-namespace MusicPlayer
+namespace MusicPlayer.Models
 {
     public abstract class MenuState : IState
     {

@@ -1,8 +1,12 @@
-﻿namespace MusicPlayer
+﻿using MusicPlayer.Interface;
+using MusicPlayer.Models;
+
+namespace MusicPlayer
 {
     public partial class Program
     {
-        public static PlayList PlaySonglist { get; set; } = new PlayList();
+        public static ClassPlayList PlaySonglist { get; set; } =
+            new ClassPlayList();
 
         private static void Test()
         {

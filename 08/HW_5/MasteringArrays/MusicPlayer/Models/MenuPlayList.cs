@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using MusicPlayer.Interface;
 
-namespace MusicPlayer
+namespace MusicPlayer.Models
 {
     public class MenuPlayList : MenuState
     {
@@ -12,10 +13,7 @@ namespace MusicPlayer
             {
                 {1, new MenuItem {Text = "Add"}},
                 {2, new MenuItem {Text = "Delete"}},
-                {3, new MenuItem {Text = "Play list forward"}},
-                {4, new MenuItem {Text = "Play list back"}},
-                {5, new MenuItem {Text = "Play list random"}},
-                {0, new MenuItem {Text = "Exit (Esc)"}}
+                {0, new MenuItem {Text = "Return to main menu (Esc)"}}
             };
 
         /// <summary>
@@ -29,9 +27,6 @@ namespace MusicPlayer
             if (selectedMenu.Key == 0) return new MenuStateGlobal();
             if (selectedMenu.Key == 1) return new AddState();
             if (selectedMenu.Key == 2) return new DeleteState();
-            if (selectedMenu.Key == 3) return new ForwardState();
-            if (selectedMenu.Key == 4) return new BackState();
-            if (selectedMenu.Key == 5) return new RandomState();
 
             return new MenuStateGlobal();
         }

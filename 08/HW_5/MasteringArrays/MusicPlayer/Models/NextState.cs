@@ -1,12 +1,13 @@
 ﻿using System;
+using MusicPlayer.Interface;
 
-namespace MusicPlayer
+namespace MusicPlayer.Models
 {
-    public class PreviousState : IState
+    public class NextState : IState
     {
         IState IState.RunState()
         {
-            Console.WriteLine("***PreviousState: ***");
+            Console.WriteLine("***NextState: ***");
 
             Console.ReadLine();
             Console.Clear();

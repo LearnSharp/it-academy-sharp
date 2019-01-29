@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading;
 
-namespace MusicPlayer
+namespace MusicPlayer.Models
 {
     public class ProgressBar : IDisposable, IProgress<double>
     {
@@ -109,6 +109,5 @@ namespace MusicPlayer
         {
             timer.Change(animationInterval, TimeSpan.FromMilliseconds(-1));
         }
-
     }
 }
