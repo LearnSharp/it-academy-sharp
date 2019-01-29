@@ -17,12 +17,11 @@ namespace MusicPlayer.Models
                 Console.Write("Song title: ");
                 NameSong = Console.ReadLine();
 
-                Console.Write("Playing time (hh:mm:ss): ");
-                Program.EnterTime(Console.ReadLine(), out var timeSongString);
+                Console.WriteLine("Playing time (hh:mm:ss):");
+                Program.EnterTime(out var timeSongString);
                 TimeSong = timeSongString;
 
-
-                Console.Write("The name of the author: ");
+                Console.Write("\nThe name of the author: ");
                 Author = Console.ReadLine();
             }
 

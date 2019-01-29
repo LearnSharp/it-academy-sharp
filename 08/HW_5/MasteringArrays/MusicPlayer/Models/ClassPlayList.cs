@@ -40,8 +40,7 @@ namespace MusicPlayer.Models
             return Playlist.Count;
         }
 
-
-        private static void GetPlaylist()
+        private static void GetPlaylistView()
         {
             if (!Playlist.Any()) return;
             Console.WriteLine("Introduced Playlist:\n"
@@ -64,7 +63,7 @@ namespace MusicPlayer.Models
         public void AllView()
         {
             Console.WriteLine("\n".PadRight(20, '\u2500'));
-            GetPlaylist();
+            GetPlaylistView();
         }
 
         private static void GetItemView(IEnumerable fnd)

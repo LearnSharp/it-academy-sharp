@@ -50,13 +50,13 @@
     <Compile Include="Models\ForwardState.cs" />
     <Compile Include="Interface\IState.cs" />
     <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="Models\MenuPlay.cs" />
     <Compile Include="Models\MenuPlayList.cs" />
     <Compile Include="Models\MenuState.cs" />
     <Compile Include="Models\MenuStateGlobal.cs" />
     <Compile Include="Models\ClassPlayList.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\NextState.cs" />
-    <Compile Include="Models\PlayState.cs" />
     <Compile Include="Models\PreviousState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Models\ProgressBar.cs" />
