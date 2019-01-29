@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using MusicPlayer.Interface;
 using static MusicPlayer.Program;
@@ -11,24 +10,10 @@ namespace MusicPlayer.Models
         private static readonly Random rng =
             new Random((int) DateTime.Now.Ticks & 0x0000FFFF);
 
-        private static void Shuffle(IList<int> list)
-        {
-            var n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                var k = rng.Next(n + 1);
-                var value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
-        }
-
-
         IState IState.RunState()
         {
-            Console.WriteLine("***Random State: ***");
-
+            Console.CursorVisible = false;
+            Console.WriteLine("*** Random State: ***");
             var cnt = PlaySonglist.GetPlaylistCount();
 
             var tmpList = new int[cnt];
@@ -42,13 +27,27 @@ namespace MusicPlayer.Models
                 var timeSong = tmpArray.GetValue(1).ToString();
                 var authSong = tmpArray.GetValue(2).ToString();
                 Console.WriteLine();
-                ProgressPlay(songTitle + authSong, timeSong);
+                ProgressPlay(songTitle + " " + authSong, timeSong);
             }
 
             Console.WriteLine("\nPress any key to return to the main menu.");
+            Console.CursorVisible = true;
             Console.ReadLine();
             Console.Clear();
             return new MenuPlay();
+        }
+
+        private static void Shuffle(IList<int> list)
+        {
+            var n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                var k = rng.Next(n + 1);
+                var value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
 }

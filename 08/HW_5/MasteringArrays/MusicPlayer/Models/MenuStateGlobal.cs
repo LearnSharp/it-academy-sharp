@@ -6,7 +6,7 @@ namespace MusicPlayer.Models
     public class MenuStateGlobal : MenuState
     {
         /// <summary>
-        /// Creating list of menu
+        ///     Creating list of menu
         /// </summary>
         protected override Dictionary<int, MenuItem> Menus { get; } =
             new Dictionary<int, MenuItem>
@@ -18,7 +18,7 @@ namespace MusicPlayer.Models
 
 
         /// <summary>
-        /// Actions when selecting a menu item with a specific number
+        ///     Actions when selecting a menu item with a specific number
         /// </summary>
         /// <param name="selectedMenu">Specific number point menu</param>
         /// <returns></returns>

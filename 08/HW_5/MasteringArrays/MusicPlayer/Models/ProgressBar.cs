@@ -109,6 +109,5 @@ namespace MusicPlayer.Models
         {
             timer.Change(animationInterval, TimeSpan.FromMilliseconds(-1));
         }
-
     }
 }

@@ -19,7 +19,7 @@ namespace MusicPlayer
                 if (str != null && Regex.IsMatch(str, "^\\d+(\\.\\d+)?$"))
                 {
                     str = str.Replace('.', ',');
-                    Decimal.TryParse(str, out decimalVar);
+                    decimal.TryParse(str, out decimalVar);
                 }
                 else
                 {
@@ -35,25 +35,34 @@ namespace MusicPlayer
         internal static string GetInputTimeToString()
         {
             var str = "";
-            const int Pos = 6;
-            var cnt = 0;
-            var bk = 0;
+            int bk = 0, cnt = 0, lenTemplate = "00:00:00".Length;
+            var isCurrent = false;
 
-            while (cnt != Pos)
+            while (!isCurrent)
             {
                 var isDigit = false;
                 while (!isDigit)
                 {
+                    while (Console.KeyAvailable) Console.ReadKey(false);
+
                     var pressedKey = Console.ReadKey();
                     if (char.IsDigit(pressedKey.KeyChar))
                     {
                         isDigit = true;
                         str += pressedKey.KeyChar.ToString();
-                        cnt++;
-                        if (cnt % 2 != 0) continue;
-                        Console.Write(":");
-                        str += ":";
+                        //cnt++;
+                        if (++cnt % 2 != 0) continue;
+                        if (str.Length != lenTemplate)
+                        {
+                            str += ":";
+                            Console.Write(":");
+                        }
+                        else
+                        {
+                            isCurrent = true;
+                        }
                     }
+
                     else
                     {
                         const string err = " <- Please input a digit.\r";
@@ -67,7 +76,7 @@ namespace MusicPlayer
                 }
             }
 
-            return "\n " + str;
+            return str;
         }
 
         internal static void EnterTime(out string timeSongString)
@@ -81,12 +90,12 @@ namespace MusicPlayer
                                   "(?:[01]\\d|2[0-3]):(?:[0-5]\\d):(?:[0-5]\\d)")
                 )
                 {
-                    timeSongString = str.Substring(0,8);
+                    timeSongString = str.Substring(0, 8);
                 }
                 else
                 {
                     Console.WriteLine("\rError input! Please repeat enter: ");
-                    str = GetInputTimeToString().Trim();
+                    str = GetInputTimeToString();
                     continue;
                 }
 
@@ -108,7 +117,7 @@ namespace MusicPlayer
                 while (i++ <= longSong)
                 {
                     progress.Report((double) i / longSong);
-                    Thread.Sleep(1000);
+                    Thread.Sleep(999);
                 }
 
                 progress.WriteLine(" .. Done.\n");

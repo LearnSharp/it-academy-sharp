@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Collections.Generic;
 using MusicPlayer.Interface;
 
 namespace MusicPlayer.Models
@@ -16,7 +14,7 @@ namespace MusicPlayer.Models
                 {1, new MenuItem {Text = "Play forward"}},
                 {2, new MenuItem {Text = "Play back"}},
                 {3, new MenuItem {Text = "Play random"}},
-                {0, new MenuItem {Text = "Exit (Esc)"}}
+                {0, new MenuItem {Text = "Return to main menu (Esc)"}}
             };
 
         /// <summary>
