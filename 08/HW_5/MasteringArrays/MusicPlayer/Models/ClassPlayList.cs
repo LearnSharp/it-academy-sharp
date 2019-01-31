@@ -35,6 +35,12 @@ namespace MusicPlayer.Models
             Playlist.Add(song);
         }
 
+        public void AddAtIndexSongPlaylist(int index, Song song)
+        {
+            Playlist.Insert(index, song);
+        }
+
+
         public int GetPlaylistCount()
         {
             return Playlist.Count;
@@ -78,7 +84,7 @@ namespace MusicPlayer.Models
         public void FindByIndex()
         {
             Console.Write("Enter the song Index in the playlist: ");
-            Program.EnterDecimal(Console.ReadLine(), out var num);
+            Program.SetEnterDecimal(Console.ReadLine(), out var num);
             var fnd = GetSongByIndex(Convert.ToInt16(num));
             if (fnd != null) GetItemView(fnd);
             else Console.WriteLine("Search returned no results.");

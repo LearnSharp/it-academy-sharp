@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopClass", "ShopClass\Shop
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPlayer", "MusicPlayer\MusicPlayer.csproj", "{37176473-01B1-4AC5-8B45-EF8FE0ADA4A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Perimeter", "Perimeter\Perimeter.csproj", "{E24CA4AB-66B4-4AE0-B0D7-34FE9672F3D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{37176473-01B1-4AC5-8B45-EF8FE0ADA4A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37176473-01B1-4AC5-8B45-EF8FE0ADA4A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37176473-01B1-4AC5-8B45-EF8FE0ADA4A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E24CA4AB-66B4-4AE0-B0D7-34FE9672F3D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E24CA4AB-66B4-4AE0-B0D7-34FE9672F3D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E24CA4AB-66B4-4AE0-B0D7-34FE9672F3D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E24CA4AB-66B4-4AE0-B0D7-34FE9672F3D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
