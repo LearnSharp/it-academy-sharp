@@ -12,7 +12,7 @@ namespace MusicPlayer
         /// </summary>
         /// <param name="str">string number</param>
         /// <param name="decimalVar">result</param>
-        internal static void EnterDecimal(string str, out decimal decimalVar)
+        internal static void SetEnterDecimal(string str, out decimal decimalVar)
         {
             while (true)
             {
@@ -32,7 +32,7 @@ namespace MusicPlayer
             }
         }
 
-        internal static string GetInputTimeToString()
+        internal static string SetEnterTimeToString()
         {
             var str = "";
             int bk = 0, cnt = 0, lenTemplate = "00:00:00".Length;
@@ -50,7 +50,6 @@ namespace MusicPlayer
                     {
                         isDigit = true;
                         str += pressedKey.KeyChar.ToString();
-                        //cnt++;
                         if (++cnt % 2 != 0) continue;
                         if (str.Length != lenTemplate)
                         {
@@ -79,9 +78,9 @@ namespace MusicPlayer
             return str;
         }
 
-        internal static void EnterTime(out string timeSongString)
+        internal static void SetEnterTimePlay(out string timeSongString)
         {
-            var str = GetInputTimeToString();
+            var str = SetEnterTimeToString();
 
             while (true)
             {
@@ -95,7 +94,7 @@ namespace MusicPlayer
                 else
                 {
                     Console.WriteLine("\rError input! Please repeat enter: ");
-                    str = GetInputTimeToString();
+                    str = SetEnterTimeToString();
                     continue;
                 }
 
@@ -103,25 +102,5 @@ namespace MusicPlayer
             }
         }
 
-        internal static void ProgressPlay(string nameSong,
-                                          string timeSongString)
-        {
-            using (var progress = new ProgressBar())
-            {
-                Console.WriteLine("Playing composition:\n" + nameSong + " ");
-                var timeSong = Convert.ToDateTime(timeSongString);
-                var longSong = timeSong.Hour * 3600 + timeSong.Minute * 60 +
-                               timeSong.Second;
-                Console.WriteLine(" long Song = {0} sec.", longSong);
-                var i = 0;
-                while (i++ <= longSong)
-                {
-                    progress.Report((double) i / longSong);
-                    Thread.Sleep(999);
-                }
-
-                progress.WriteLine(" .. Done.\n");
-            }
-        }
     }
 }

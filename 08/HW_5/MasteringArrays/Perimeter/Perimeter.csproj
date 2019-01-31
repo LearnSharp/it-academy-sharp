@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{37176473-01B1-4AC5-8B45-EF8FE0ADA4A1}</ProjectGuid>
+    <ProjectGuid>{E24CA4AB-66B4-4AE0-B0D7-34FE9672F3D1}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MusicPlayer</RootNamespace>
-    <AssemblyName>MusicPlayer</AssemblyName>
+    <RootNamespace>Perimeter</RootNamespace>
+    <AssemblyName>Perimeter</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,27 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\AddState.cs" />
-    <Compile Include="Models\BackState.cs" />
-    <Compile Include="Models\ConfigurableMenuState.cs" />
-    <Compile Include="Models\DeleteState.cs" />
-    <Compile Include="Models\ForwardState.cs" />
-    <Compile Include="Interface\IState.cs" />
-    <Compile Include="Models\MenuItem.cs" />
-    <Compile Include="Models\MenuPlay.cs" />
-    <Compile Include="Models\MenuPlayList.cs" />
-    <Compile Include="Models\MenuState.cs" />
-    <Compile Include="Models\MenuStateGlobal.cs" />
-    <Compile Include="Models\ClassPlayList.cs" />
-    <Compile Include="Models\PlayStateBase.cs" />
-    <Compile Include="Models\Song.cs" />
-    <Compile Include="Models\NextState.cs" />
-    <Compile Include="Models\PreviousState.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Models\ProgressBar.cs" />
-    <Compile Include="Program.EnterMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\RandomState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
