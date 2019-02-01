@@ -34,7 +34,17 @@ namespace Stack
             Console.WriteLine("Remaining after firing ammo:");
             foreach (var ammo in s) Console.WriteLine(" - " + ammo);
 
-            Console.WriteLine();
+            var stack = new Stack<int>();
+            stack.Push(1);
+            stack.Push(130);
+            Console.WriteLine(stack.Count);
+            Console.WriteLine(stack.Peek());
+            stack.Push(1);
+            stack.Push(5);
+            stack.Push(3);
+            stack.Pop();
+            stack.Peek();
+            Console.WriteLine(stack.Top);
         }
 
         /// <inheritdoc />
@@ -46,7 +56,7 @@ namespace Stack
         /// <typeparam name="T">Type of information stored</typeparam>
         internal class Stack<T> : IEnumerable
         {
-            private readonly T[] Array;
+            private T[] StackArray { get; set; }
 
             /// <summary>
             ///     Constructor. Create a stack.
@@ -56,7 +66,16 @@ namespace Stack
             {
                 Size = size;
                 Top = 0;
-                Array = new T[Size];
+                StackArray = new T[Size];
+            }
+
+            private static int Capacity { get; set; } = 10;
+
+            public Stack()
+            {
+                Size = Capacity;
+                Top = 0;
+                StackArray = new T[Size];
             }
 
             /// <summary>
@@ -67,12 +86,16 @@ namespace Stack
             /// <summary>
             ///     Stack Size
             /// </summary>
-            public int Size { get; }
+            private int Size { get; set; }
 
             /// <summary>
             ///     Number of stack items
             /// </summary>
-            public int Count => Top;
+            public int Count
+            {
+                get => Top;
+                set => Top = value;
+            }
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -95,10 +118,13 @@ namespace Stack
             public void Push(T element)
             {
                 if (IsFull())
-                    throw new Exception();
+                    ResizeArray(StackArray);
 
-                Array[Top++] = element;
+                StackArray[Top++] = element;
             }
+
+            private static void ResizeArray(T[] array) =>
+                Array.Resize(ref array, Capacity);
 
             /// <summary>
             ///     Return top item
@@ -106,14 +132,14 @@ namespace Stack
             /// <returns>Item</returns>
             public T Peek()
             {
-                return Array[Top - 1];
+                return StackArray[Top - 1];
             }
 
             /// <summary>
             ///     Reading the top of the stack
             /// </summary>
             /// <returns>Item</returns>
-            public T Pop() => Array[--Top];
+            public T Pop() => StackArray[--Top];
 
             public IEnumerator<T> GetEnumerator()
             {
@@ -121,7 +147,7 @@ namespace Stack
                     throw new Exception("Stack not filled.");
 
                 for (var i = Top; i > 0; i--)
-                    yield return Array[i - 1];
+                    yield return StackArray[i - 1];
             }
         }
     }
