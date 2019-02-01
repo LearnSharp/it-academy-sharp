@@ -45,6 +45,7 @@ namespace Stack
             stack.Pop();
             stack.Peek();
             Console.WriteLine(stack.Top);
+            foreach (var ammo in stack) Console.WriteLine(" - " + ammo);
         }
 
         /// <inheritdoc />
