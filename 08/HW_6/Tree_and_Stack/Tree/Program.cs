@@ -82,7 +82,7 @@ namespace Tree
                                   node.Name, node.DateOfBirth.Year);
         }
 
-        private static void AllNode(GenericTreeNext node)
+        private static void AllNodes(GenericTreeNext node)
         {
             Console.WriteLine("{0}{1} ({2})", "".PadRight(3, ' '),
                               node.Name, node.DateOfBirth.Year);
@@ -113,7 +113,7 @@ namespace Tree
             Stepan2.AddChild(Stepan3);
 
             // Listing all the components (the names of relatives)
-            Ivan.Traverse(AllNode);
+            Ivan.Traverse(AllNodes);
             Console.WriteLine();
 
             // Output of all nodes
@@ -139,6 +139,10 @@ namespace Tree
             // Selection of relatives by year of birth
             Console.WriteLine("Selection of relatives by year of birth.");
             Ivan.Traverse(Convert.ToDateTime("01.01.2019"), NodeFinder);
+            Console.WriteLine();
+
+            // Selection of relatives by year of birth starting from the specified node
+            Stepan1.Traverse(Convert.ToDateTime("01.01.2019"), NodeFinder);
             Console.WriteLine();
         }
     }
