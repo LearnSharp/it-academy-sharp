@@ -81,7 +81,13 @@ namespace Tree
             var Stepan2 = new GenericTreeNext("Stepan2", Convert.ToDateTime("01.01.2000"));
             Stepan1.AddChild(Stepan2);
 
+            var Stepan3 = new GenericTreeNext("Stepan3", Convert.ToDateTime("01.01.2019"));
+            Stepan2.AddChild(Stepan3);
+
+
             Ivan.Traverse(NodeWorker);
+            Console.WriteLine();
+
             Ivan.RemoveChild(Stepan1);
             Ivan.Traverse(NodeWorker);
             Console.WriteLine();
