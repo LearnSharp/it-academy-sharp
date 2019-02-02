@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Tree
 {
     internal class GenericTree<T> where T : GenericTree<T>
-        // recursive constraint  
+    // recursive constraint  
     {
         // no specific data declaration  
 
@@ -25,8 +25,6 @@ namespace Tree
             Children.Remove(node);
         }
 
-        //todo отобрать родственников по году рождения
-
         public void Traverse(Action<int, T> visitor)
         {
             Traverse(0, visitor);
@@ -34,7 +32,7 @@ namespace Tree
 
         protected virtual void Traverse(int depth, Action<int, T> visitor)
         {
-            visitor(depth, (T)this);
+            visitor(depth, (T) this);
             foreach (var child in Children)
                 child.Traverse(depth + 1, visitor);
         }
@@ -51,6 +49,11 @@ namespace Tree
 
         public string Name { get; set; } // user-data example
         public DateTime DateOfBirth { get; set; }
+
+        public List<GenericTreeNext> SelectByYearOfBirth(DateTime year)
+        {
+            return Children.FindAll(item => item.DateOfBirth == year);
+        }
     }
 
 
@@ -97,7 +100,6 @@ namespace Tree
             Console.WriteLine();
 
             Stepan1.Traverse(NodeWorker);
-
         }
     }
 }
