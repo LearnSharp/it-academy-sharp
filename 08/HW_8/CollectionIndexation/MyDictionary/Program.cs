@@ -7,13 +7,13 @@ namespace MyDictionary
     {
         public MyDictionary()
         {
-            Top = 0;
+            Count = 0;
             Key = new string[Capacity];
             Value = new int[Capacity];
         }
 
-        public int Capacity { get; } = 100;
-        public int Top { get; set; }
+        private int Capacity { get; } = 100;
+        public int Count { get; private set; }
         public string[] Key { get; }
         public int[] Value { get; }
 
@@ -37,7 +37,7 @@ namespace MyDictionary
         {
             get
             {
-                if (index >= 0 && index < Top)
+                if (index >= 0 && index < Count)
                     return Key[index] + " -> " + Value[index];
                 return "Attempt to address out of range.";
             }
@@ -45,20 +45,15 @@ namespace MyDictionary
 
         public IEnumerator GetEnumerator()
         {
-            for (var i = 0; i < Top; i++)
+            for (var i = 0; i < Count; i++)
                 yield return Key[i] + "\t: " + Value[i];
         }
 
         public void Add(string key, int value)
         {
-            Key[Top] = key;
-            Value[Top] = value;
-            ++Top;
-        }
-
-        public int Count()
-        {
-            return Top;
+            Key[Count] = key;
+            Value[Count] = value;
+            ++Count;
         }
     }
 
@@ -86,7 +81,7 @@ namespace MyDictionary
             Console.WriteLine();
 
             foreach (var it in dict) Console.WriteLine("{0}", it);
-            Console.WriteLine("Count of elements: {0}", dict.Count());
+            Console.WriteLine("Count of elements: {0}", dict.Count);
             Console.WriteLine();
 
             var dict1 = new MyDictionary
@@ -99,7 +94,7 @@ namespace MyDictionary
             };
 
             foreach (var it in dict1) Console.WriteLine("{0}", it);
-            Console.WriteLine("Count of elements: {0}", dict1.Count());
+            Console.WriteLine("Count of elements: {0}", dict1.Count);
         }
     }
 }
