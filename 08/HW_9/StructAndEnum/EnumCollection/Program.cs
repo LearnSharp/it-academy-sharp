@@ -22,8 +22,9 @@ namespace EnumType
 
         internal static int MenuColor()
         {
-            Console.WriteLine("Press Esc to exit.\n");
             Console.Clear();
+            Console.ResetColor();
+            Console.WriteLine("Press Esc to exit.\n");
             Console.WriteLine("Select text color");
             var type = typeof(ConsoleColor);
             var counter = 0;
