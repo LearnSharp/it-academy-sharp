@@ -10,7 +10,7 @@ namespace EnumType
             var itr = 0;
             var type = typeof(Colors);
 
-            foreach (Colors enColor in Enum.GetValues(type))
+            foreach (var enColor in Enum.GetValues(type))
             {
                 if ((int) enColor == color)
                     Console.ForegroundColor = (ConsoleColor) itr;
@@ -69,7 +69,7 @@ namespace EnumType
 
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             do
             {
