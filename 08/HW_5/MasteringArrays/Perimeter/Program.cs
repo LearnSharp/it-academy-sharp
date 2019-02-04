@@ -94,29 +94,30 @@ namespace Perimeter
                 }
             }
 
-
-            public void GetPerimeterView(ref double result)
+            private void ResultView(double result)
             {
-                if (Points.Count > 5) return;
                 switch (FormFigure)
                 {
-                    case (int) BaseFigure.Triangle:
-                        CalculatePerimeter(Points, ref result);
+                    case (int)BaseFigure.Triangle:
                         Console.WriteLine("Triangle perimeter: {0:f2}", result);
                         break;
-                    case (int) BaseFigure.Quadrangle:
-                        CalculatePerimeter(Points, ref result);
-                        Console.WriteLine("Quadrangle perimeter: {0:f2}",
-                                          result);
+                    case (int)BaseFigure.Quadrangle:
+                        Console.WriteLine("Quadrangle perimeter: {0:f2}", result);
                         break;
-                    case (int) BaseFigure.Pentagon:
-                        CalculatePerimeter(Points, ref result);
+                    case (int)BaseFigure.Pentagon:
                         Console.WriteLine("Pentagon perimeter: {0:f2}", result);
                         break;
                     default:
                         result = 0;
                         break;
                 }
+            }
+
+            public void GetPerimeterView(ref double result)
+            {
+                if (Points.Count > 5) return;
+                CalculatePerimeter(Points, ref result);
+                ResultView(result);
             }
 
             private enum BaseFigure
