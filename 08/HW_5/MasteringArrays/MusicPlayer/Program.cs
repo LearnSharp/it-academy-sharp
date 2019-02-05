@@ -5,10 +5,10 @@ namespace MusicPlayer
 {
     public partial class Program
     {
-        public static ClassPlayList PlaySonglist { get; set; } =
-            new ClassPlayList();
+        public static PlayList CurrentPlaylist { get; set; } =
+            new PlayList();
 
-        private static void Test()
+        private static void LoadContent()
         {
             IState startState = new MenuStateGlobal();
             while (startState != null) startState = startState.RunState();
@@ -16,19 +16,7 @@ namespace MusicPlayer
 
         private static void Main()
         {
-            Test();
+            LoadContent();
         }
-
-        //private static void Test()
-        //{
-        //    var menuState = new ConfigurableMenuState();
-        //    menuState.AddMenuItem(1, new MenuItem {Text = "Option 1"},
-        //                          () => new AuthState());
-        //    menuState.AddMenuItem(2, new MenuItem {Text = "Exit"},
-        //                          () => null);
-
-        //    IState startState = menuState;
-        //    while (startState != null) startState = startState.RunState();
-        //}
     }
 }

@@ -1,35 +1,27 @@
-﻿using System;
-using MusicPlayer.Interface;
+﻿using MusicPlayer.Interface;
 using static MusicPlayer.Program;
 
 namespace MusicPlayer.Models
 {
     public class BackState : PlayStateBase, IState
     {
-        private static bool ControlEvent { get; set; }
+        private delegate void HandlerEsc();
+
         IState IState.RunState()
         {
-            Console.CursorVisible = false;
-            Console.WriteLine("*** Back State: ***");
+            HandlerEsc handlerEsc = HandLoopForward;
+            HeaderState(CurrentPlaylist, StBack);
 
-            for (var i = PlaySonglist.GetPlaylistCount() - 1; i >= 0; i--)
-            {
-                while (!ControlEvent)
-                {
-                    var tmpArray = PlaySonglist.GetSongByIndex(i).ToArray();
-                    var songTitle = tmpArray.GetValue(0).ToString();
-                    var timeSong = tmpArray.GetValue(1).ToString();
-                    var authSong = tmpArray.GetValue(2).ToString();
-                    Console.WriteLine();
-                    ProgressPlay(songTitle + " " + authSong, timeSong);
-                }
-            }
+            handlerEsc();
 
-            Console.WriteLine("\nPress any key to return to the main menu.");
-            Console.CursorVisible = true;
-            Console.ReadLine();
-            Console.Clear();
+            FooterState();
             return new MenuPlay();
+        }
+
+        private void HandLoopForward()
+        {
+            do SongHandler(CurrentPlaylist, Back);
+            while (!ControlEvent);
         }
     }
 }

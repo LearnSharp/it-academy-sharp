@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using MusicPlayer.Interface;
 using static MusicPlayer.Program;
 
@@ -8,40 +8,24 @@ namespace MusicPlayer.Models
 {
     public class RandomState : PlayStateBase, IState
     {
-        private static readonly Random rng =
-            new Random((int) DateTime.Now.Ticks & 0x0000FFFF);
-
-        private static bool ControlEvent { get; set; }
-        private static int IndexOfSong { get; set; }
-        private static List<int> CountOfSong { get; } = new List<int>();
+        private delegate void HandlerEsc();
 
         IState IState.RunState()
         {
-            ControlEvent = false;
-            Console.CursorVisible = false;
-            Console.WriteLine("*** Random State: ***");
-            var cnt = PlaySonglist.GetPlaylistCount();
+            HandlerEsc handlerEsc = HandLoopForward;
+            HeaderState(CurrentPlaylist, StRandom);
 
-            var tmpList = new int[cnt];
-            for (var i = 0; i < cnt; i++) tmpList[i] = i;
-            Shuffle(tmpList);
+            handlerEsc();
 
-            foreach (var id in tmpList)
-                CountOfSong.Add(id);
-
-            Task.Factory.StartNew(InterruptEndExecuteFindSong);
-
-            foreach (var pos in tmpList)
-                if (!ControlEvent)
-                {
-                    IndexOfSong = pos;
-                    SongHandler(PlaySonglist, pos);
-                }
-
-            Console.WriteLine("\nPress any key to return to the main menu.");
-            Console.CursorVisible = true;
-            Console.ReadKey(true);
+            FooterState();
+            //Task.Factory.StartNew(InterruptEndExecuteFindSong);
             return new MenuPlay();
+        }
+
+        private void HandLoopForward()
+        {
+            do SongHandler(CurrentPlaylist, Random);
+            while (!ControlEvent);
         }
 
         private static void InterruptEndExecuteFindSong()
@@ -66,20 +50,6 @@ namespace MusicPlayer.Models
             //}
             //Console.Clear();
             Console.WriteLine("\n**************************");
-        }
-
-
-        private static void Shuffle(IList<int> list)
-        {
-            var n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                var k = rng.Next(n + 1);
-                var value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
         }
     }
 }
