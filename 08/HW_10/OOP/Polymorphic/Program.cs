@@ -2,6 +2,10 @@
 
 namespace Polymorphic
 {
+    /// <summary>
+    /// An example of using type inheritance from an object created using
+    /// the Singleton pattern and outputting some results through a delegate
+    /// </summary>
     internal class Program
     {
         private class Materials
