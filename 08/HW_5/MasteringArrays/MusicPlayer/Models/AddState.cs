@@ -14,7 +14,7 @@ namespace MusicPlayer.Models
             {
                 var song = new Song();
                 song.RecordSong();
-                Program.PlaySonglist.AddSongPlaylist(song);
+                Program.CurrentPlaylist.AddOneSong(song);
 
                 Console.WriteLine("\nContinue entering?\nPress any key " +
                                   "for continue or Esc for exit.\n");
