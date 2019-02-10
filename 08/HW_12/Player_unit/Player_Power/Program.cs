@@ -25,9 +25,7 @@ namespace Player_Power
         public abstract void Start();
         public abstract void Stop();
 
-        public virtual void ShowVoltage()
-        {
-        }
+        public virtual void ShowVoltage() { }
     }
 
     public interface IVoltage
@@ -128,13 +126,9 @@ namespace Player_Power
     public class Sony : Power
     {
         private readonly IPlayer _player;
-        private IVoltage _volt;
 
-        public Sony(IPlayer player, IVoltage voltage) : base(voltage)
-        {
-            _player = player;
-            _volt = voltage;
-        }
+        public Sony(IPlayer player, IVoltage voltage) : base(voltage) 
+            => _player = player;
 
         public override void Pause()
         {
@@ -219,6 +213,7 @@ namespace Player_Power
             producer.Start();
             producer.Pause();
             producer.Stop();
+            Console.WriteLine();
         }
 
         private static void Main()
@@ -244,7 +239,7 @@ namespace Player_Power
 
             //#endregion
 
-            #region if without Ninject
+        #region if without Ninject
 
             //var voltages = new List<IVoltage>
             //{
@@ -259,7 +254,7 @@ namespace Player_Power
             //    ShowRes(new Sony(player, voltage));
             //}
 
-            #endregion
+        #endregion
 
             Console.WriteLine();
         }
