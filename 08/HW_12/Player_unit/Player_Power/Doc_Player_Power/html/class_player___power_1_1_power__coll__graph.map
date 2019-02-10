@@ -1,0 +1,4 @@
+<map id="Player_Power.Power" name="Player_Power.Power">
+<area shape="rect" id="node2" href="$interface_player___power_1_1_i_player.html" title="IPlayer" alt="" coords="5,5,68,32"/>
+<area shape="rect" id="node3" href="$interface_player___power_1_1_i_voltage.html" title="Player_Power.IVoltage" alt="" coords="92,5,245,32"/>
+</map>

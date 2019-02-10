@@ -1,0 +1,8 @@
+<map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
+<area shape="rect" id="node1" href="$interface_player___power_1_1_i_player.html" title="Player_Power.IPlayer" alt="" coords="5,31,152,57"/>
+<area shape="rect" id="node2" href="$class_player___power_1_1_player.html" title="Player_Power.Player" alt="" coords="200,5,343,32"/>
+<area shape="rect" id="node3" href="$class_player___power_1_1_power.html" title="Player_Power.Power" alt="" coords="200,56,343,83"/>
+<area shape="rect" id="node4" href="$class_player___power_1_1_panasonic.html" title="Player_Power.Panasonic" alt="" coords="391,5,557,32"/>
+<area shape="rect" id="node5" href="$class_player___power_1_1_samsung.html" title="Player_Power.Samsung" alt="" coords="393,56,555,83"/>
+<area shape="rect" id="node6" href="$class_player___power_1_1_sony.html" title="Player_Power.Sony" alt="" coords="406,107,542,133"/>
+</map>

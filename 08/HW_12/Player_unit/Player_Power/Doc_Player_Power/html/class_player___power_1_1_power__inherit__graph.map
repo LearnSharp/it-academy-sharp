@@ -1,0 +1,6 @@
+<map id="Player_Power.Power" name="Player_Power.Power">
+<area shape="rect" id="node3" href="$class_player___power_1_1_panasonic.html" title="Player_Power.Panasonic" alt="" coords="5,155,172,181"/>
+<area shape="rect" id="node4" href="$class_player___power_1_1_samsung.html" title="Player_Power.Samsung" alt="" coords="196,155,357,181"/>
+<area shape="rect" id="node5" href="$class_player___power_1_1_sony.html" title="Player_Power.Sony" alt="" coords="382,155,518,181"/>
+<area shape="rect" id="node2" href="$interface_player___power_1_1_i_player.html" title="IPlayer" alt="" coords="245,5,308,32"/>
+</map>
