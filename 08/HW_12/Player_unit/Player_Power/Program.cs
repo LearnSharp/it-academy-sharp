@@ -262,7 +262,5 @@ namespace Player_Power
 
             Console.WriteLine();
         }
-
-        private delegate void Output<in T>(T obj);
     }
 }
