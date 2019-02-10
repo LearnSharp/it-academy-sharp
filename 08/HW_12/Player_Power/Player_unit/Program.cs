@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Ninject;
+using Ninject.Modules;
 
 namespace Player_Power
 {
@@ -130,6 +132,42 @@ namespace Player_Power
         }
     }
 
+    public class MyConfigModule_V110 : NinjectModule
+    {
+        public override void Load()
+        {
+            Bind<IVoltage>().To<VoltageV110>();
+            Bind<Power>().ToSelf().InSingletonScope();
+        }
+    }
+
+    public class MyConfigModule_V127 : NinjectModule
+    {
+        public override void Load()
+        {
+            Bind<IVoltage>().To<VoltageV127>();
+            Bind<Power>().ToSelf().InSingletonScope();
+        }
+    }
+
+    public class MyConfigModule_V220 : NinjectModule
+    {
+        public override void Load()
+        {
+            Bind<IVoltage>().To<VoltageV220>();
+            Bind<Power>().ToSelf().InSingletonScope();
+        }
+    }
+
+    public class MyConfigModule_V380 : NinjectModule
+    {
+        public override void Load()
+        {
+            Bind<IVoltage>().To<VoltageV380>();
+            Bind<Power>().ToSelf().InSingletonScope();
+        }
+    }
+
     internal class Program
     {
         private delegate void Output<in T>(T obj);
@@ -145,18 +183,38 @@ namespace Player_Power
         private static void Main()
         {
             IPlayer player = new Player();
-            var voltages = new List<IVoltage>
+
+            #region if using ninject
+            var volts = new List<IKernel>
             {
-                new VoltageV110(), new VoltageV127(),
-                new VoltageV220(), new VoltageV380()
+                new StandardKernel(new MyConfigModule_V110()),
+                new StandardKernel(new MyConfigModule_V127()),
+                new StandardKernel(new MyConfigModule_V220()),
+                new StandardKernel(new MyConfigModule_V380())
             };
 
-            foreach (var voltage in voltages)
+            foreach (var voltage in volts)
             {
-                ShowRes(new Samsung(player, voltage));
-                ShowRes(new Panasonic(player, voltage));
-                ShowRes(new Sony(player, voltage));
+                ShowRes(new Samsung(player, voltage.Get<IVoltage>()));
+                ShowRes(new Panasonic(player, voltage.Get<IVoltage>()));
+                ShowRes(new Sony(player, voltage.Get<IVoltage>()));
             }
+            #endregion
+
+            #region if without Ninject
+            //var voltages = new List<IVoltage>
+            //{
+            //    new VoltageV110(), new VoltageV127(),
+            //    new VoltageV220(), new VoltageV380()
+            //};
+
+            //foreach (var voltage in voltages)
+            //{
+            //    ShowRes(new Samsung(player, voltage));
+            //    ShowRes(new Panasonic(player, voltage));
+            //    ShowRes(new Sony(player, voltage));
+            //}
+            #endregion
 
             Console.WriteLine();
         }
