@@ -11,11 +11,11 @@ namespace Player_Power
         V380 = 380
     }
 
-    public class Power
+    public abstract class Power : IPlayer
     {
         private readonly IVoltage _voltage;
 
-        public Power(IVoltage voltage)
+        internal Power(IVoltage voltage)
         {
             _voltage = voltage;
         }
@@ -26,6 +26,10 @@ namespace Player_Power
         {
             Console.WriteLine("Voltage = {0}", _voltage.GetVoltage());
         }
+
+        public abstract void Pause();
+        public abstract void Start();
+        public abstract void Stop();
     }
 
     public interface IVoltage
@@ -65,7 +69,6 @@ namespace Player_Power
         }
     }
 
-
     public interface IPlayer
     {
         void Pause();
@@ -73,40 +76,40 @@ namespace Player_Power
         void Stop();
     }
 
-    public class Samsung : Power, IPlayer
+    public class Samsung : Power
     {
         private readonly IPlayer _player;
 
         public Samsung(IPlayer player, IVoltage voltage) :
             base(voltage) => _player = player;
 
-        public void Pause() => _player.Pause();
-        public void Start() => _player.Start();
-        public void Stop() => _player.Stop();
+        public override void Pause() => _player.Pause();
+        public override void Start() => _player.Start();
+        public override void Stop() => _player.Stop();
     }
 
-    public class Panasonic : Power, IPlayer
+    public class Panasonic : Power
     {
         private readonly IPlayer _player;
 
         public Panasonic(IPlayer player, IVoltage voltage) :
             base(voltage) => _player = player;
 
-        public void Pause() => _player.Pause();
-        public void Start() => _player.Start();
-        public void Stop() => _player.Stop();
+        public override void Pause() => _player.Pause();
+        public override void Start() => _player.Start();
+        public override void Stop() => _player.Stop();
     }
 
-    public class Sony : Power, IPlayer
+    public class Sony : Power
     {
         private readonly IPlayer _player;
 
         public Sony(IPlayer player, IVoltage voltage) :
             base(voltage) => _player = player;
 
-        public void Pause() => _player.Pause();
-        public void Start() => _player.Start();
-        public void Stop() => _player.Stop();
+        public override void Pause() => _player.Pause();
+        public override void Start() => _player.Start();
+        public override void Stop() => _player.Stop();
     }
 
     public class Player : IPlayer
@@ -127,33 +130,16 @@ namespace Player_Power
         }
     }
 
-
     internal class Program
     {
         private delegate void Output<in T>(T obj);
 
-        private static void ShowRes(Samsung samsung)
+        private static void ShowRes(Power producer)
         {
-            samsung.ShowVoltage();
-            samsung.Start();
-            samsung.Pause();
-            samsung.Stop();
-        }
-
-        private static void ShowRes(Sony sony)
-        {
-            sony.ShowVoltage();
-            sony.Start();
-            sony.Pause();
-            sony.Stop();
-        }
-
-        private static void ShowRes(Panasonic panasonic)
-        {
-            panasonic.ShowVoltage();
-            panasonic.Start();
-            panasonic.Pause();
-            panasonic.Stop();
+            producer.ShowVoltage();
+            producer.Start();
+            producer.Pause();
+            producer.Stop();
         }
 
         private static void Main()
