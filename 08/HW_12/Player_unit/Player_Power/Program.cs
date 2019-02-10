@@ -15,12 +15,9 @@ namespace Player_Power
 
     public abstract class Power : IPlayer
     {
-        private readonly IVoltage _voltage;
+        internal readonly IVoltage _voltage;
 
-        internal Power(IVoltage voltage)
-        {
-            _voltage = voltage;
-        }
+        internal Power(IVoltage voltage) => _voltage = voltage;
 
         public int Voltage { get; set; }
 
@@ -28,9 +25,8 @@ namespace Player_Power
         public abstract void Start();
         public abstract void Stop();
 
-        public void ShowVoltage()
+        public virtual void ShowVoltage()
         {
-            Console.WriteLine("Voltage = {0}", _voltage.GetVoltage());
         }
     }
 
@@ -83,10 +79,7 @@ namespace Player_Power
         private readonly IPlayer _player;
 
         public Samsung(IPlayer player, IVoltage voltage) :
-            base(voltage)
-        {
-            _player = player;
-        }
+            base(voltage) => _player = player;
 
         public override void Pause()
         {
@@ -109,10 +102,7 @@ namespace Player_Power
         private readonly IPlayer _player;
 
         public Panasonic(IPlayer player, IVoltage voltage) :
-            base(voltage)
-        {
-            _player = player;
-        }
+            base(voltage) => _player = player;
 
         public override void Pause()
         {
@@ -127,17 +117,23 @@ namespace Player_Power
         public override void Stop()
         {
             _player.Stop();
+        }
+
+        public override void ShowVoltage()
+        {
+            Console.WriteLine("Voltage Panasonic = {0}", _voltage.GetVoltage());
         }
     }
 
     public class Sony : Power
     {
         private readonly IPlayer _player;
+        private IVoltage _volt;
 
-        public Sony(IPlayer player, IVoltage voltage) :
-            base(voltage)
+        public Sony(IPlayer player, IVoltage voltage) : base(voltage)
         {
             _player = player;
+            _volt = voltage;
         }
 
         public override void Pause()
@@ -153,6 +149,11 @@ namespace Player_Power
         public override void Stop()
         {
             _player.Stop();
+        }
+
+        public override void ShowVoltage()
+        {
+            Console.WriteLine("Voltage Sony = {0}", _voltage.GetVoltage());
         }
     }
 
@@ -224,7 +225,7 @@ namespace Player_Power
         {
             IPlayer player = new Player();
 
-            #region if using ninject
+            //#region if using ninject
 
             var volts = new List<IKernel>
             {
@@ -241,7 +242,7 @@ namespace Player_Power
                 ShowRes(new Sony(player, voltage.Get<IVoltage>()));
             }
 
-            #endregion
+            //#endregion
 
             #region if without Ninject
 
