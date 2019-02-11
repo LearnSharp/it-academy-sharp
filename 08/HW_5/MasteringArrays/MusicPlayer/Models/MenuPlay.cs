@@ -21,7 +21,7 @@ namespace MusicPlayer.Models
         ///     Actions when selecting a menu item with a specific number
         /// </summary>
         /// <param name="selectedMenu">Specific number point menu</param>
-        /// <returns></returns>
+        /// <returns>new MenuStateGlobal()</returns>
         protected override IState NextState(
             KeyValuePair<int, MenuItem> selectedMenu)
         {

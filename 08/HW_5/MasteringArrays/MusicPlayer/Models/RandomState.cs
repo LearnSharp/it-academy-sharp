@@ -7,25 +7,24 @@ namespace MusicPlayer.Models
 {
     public class RandomState : PlayStateBase, IState
     {
-        private delegate void HandlerEsc();
-
         IState IState.RunState()
         {
             HandlerEsc handlerEsc = HandLoopForward;
-            HeaderState(CurrentPlaylist, StRandom);
+            HeaderState(StRandom);
 
             Task.Factory.StartNew(InterruptEndExecuteFindSong);
-            handlerEsc();
 
+            handlerEsc();
             FooterState();
-            //
             return new MenuPlay();
         }
 
-        private void HandLoopForward()
+        private static void HandLoopForward()
         {
-            do SongHandler(CurrentPlaylist, Random);
-            while (!ControlEvent);
+            do
+            {
+                SongHandler(CurrentPlaylist, Random);
+            } while (!ControlEvent);
         }
 
         private static void InterruptEndExecuteFindSong()
@@ -34,12 +33,14 @@ namespace MusicPlayer.Models
             if (cki.Key == ConsoleKey.F)
             {
                 while (Console.KeyAvailable) Console.ReadKey(false);
-
                 Console.Clear();
                 Console.WriteLine("******** Method Find **********");
+
 
                 ControlEvent = true;
             }
         }
+
+        private delegate void HandlerEsc();
     }
 }

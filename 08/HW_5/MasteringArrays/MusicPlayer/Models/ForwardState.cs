@@ -5,12 +5,10 @@ namespace MusicPlayer.Models
 {
     public class ForwardState : PlayStateBase, IState
     {
-        private delegate void HandlerEsc();
-
         IState IState.RunState()
         {
-            HandlerEsc handlerEsc= HandLoopForward;
-            HeaderState(CurrentPlaylist, StForward);
+            HandlerEsc handlerEsc = HandLoopForward;
+            HeaderState(StForward);
 
             handlerEsc();
 
@@ -18,10 +16,14 @@ namespace MusicPlayer.Models
             return new MenuPlay();
         }
 
-        private void HandLoopForward()
+        private static void HandLoopForward()
         {
-            do SongHandler(CurrentPlaylist);
-            while (!ControlEvent);
+            do
+            {
+                SongHandler(CurrentPlaylist);
+            } while (!ControlEvent);
         }
+
+        private delegate void HandlerEsc();
     }
 }

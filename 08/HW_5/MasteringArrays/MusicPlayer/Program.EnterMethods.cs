@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using System.Threading;
-using MusicPlayer.Models;
 
 namespace MusicPlayer
 {
-    public partial class Program
+    public static partial class Program
     {
         /// <summary>
         ///     Values entered are limited to numbers only.
@@ -32,7 +30,7 @@ namespace MusicPlayer
             }
         }
 
-        internal static string SetEnterTimeToString()
+        private static string SetEnterTimeToString()
         {
             var str = "";
             int bk = 0, cnt = 0, lenTemplate = "00:00:00".Length;
@@ -101,6 +99,5 @@ namespace MusicPlayer
                 break;
             }
         }
-
     }
 }

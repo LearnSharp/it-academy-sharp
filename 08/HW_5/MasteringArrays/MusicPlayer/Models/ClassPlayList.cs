@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,9 +6,19 @@ namespace MusicPlayer.Models
 {
     public class PlayList
     {
-        private void SetExampleDate()
+        public PlayList()
         {
-            #region
+            Playlist = new List<Song>();
+
+            //** set for example date
+            SetExampleDate();
+        }
+
+        private static List<Song> Playlist { get; set; }
+
+        private static void SetExampleDate()
+        {
+        #region
 
             //Album "Death Magnetic", 2008
             //AddSongPlaylist(new Song("That Was Just Your Life", "00:07:08", "Metallica"));
@@ -23,7 +32,7 @@ namespace MusicPlayer.Models
             //AddSongPlaylist(new Song("Suicide & Redemption", "00:09:56", "Metallica"));
             //AddSongPlaylist(new Song("My Apocalypse", "00:05:00", "Metallica"));
 
-            #endregion
+        #endregion
 
             AddOneSong(new Song("That Was Just Your Life", "00:00:08", "Metallica"));
             AddOneSong(new Song("The End of the Line", "00:00:03", "Metallica"));
@@ -37,32 +46,17 @@ namespace MusicPlayer.Models
             //AddOneSong(new Song("My Apocalypse", "00:00:02", "Metallica"));
         }
 
-        public PlayList()
+        public Song GetSongByIndex(int index)
         {
-            var playList = new List<Song>();
-            Playlist = playList;
-            //** set for example date
-            SetExampleDate();
+            return Playlist.ElementAtOrDefault(index);
         }
 
-        private static List<Song> Playlist { get; set; }
-
-        public ArrayList GetSongByIndex(int index)
+        private Song GetSongByName(string name)
         {
-            var fnd = Playlist.ElementAtOrDefault(index);
-            return fnd?.GetPlaylistView();
+            return Playlist.Single(x => x.NameSong == name);
         }
 
-        public ArrayList GetSongByName(string name)
-        {
-            foreach (var itm in Playlist)
-                if (itm.GetPlaylistView().Contains(name))
-                    return itm.GetPlaylistView();
-
-            return null;
-        }
-
-        public void AddOneSong(Song song)
+        public static void AddOneSong(Song song)
         {
             Playlist.Add(song);
         }
@@ -72,45 +66,56 @@ namespace MusicPlayer.Models
             Playlist.Insert(index, song);
         }
 
-        /// <summary>
-        /// Get the number of songs in the playlist
-        /// </summary>
-        /// <returns></returns>
-        public int GetCount()
+        public static int GetCount()
         {
             return Playlist.Count;
         }
 
-        private static void GetPlaylistView()
+        public static string GetAllTime()
+        {
+            var seconds = 0;
+            foreach (var song in Playlist)
+            {
+                seconds += Convert.ToDateTime(song.TimeSong).Second;
+            }
+
+            return TimeSpan.FromSeconds(seconds).ToString(@"hh\:mm\:ss");
+        }
+
+        private static void ShowPlaylist()
         {
             if (!Playlist.Any()) return;
             Console.WriteLine("Introduced Playlist:\n"
                                   .PadRight(20, '\u2500'));
             var num = 0;
-            foreach (var it in Playlist)
-            {
-                Console.Write("{0}  ", ++num);
-                foreach (var i in it.GetPlaylistView())
-                    Console.Write("{0} ", i);
-
-                Console.WriteLine();
-            }
+            foreach (var it in Playlist) ShowRes(num, it);
 
             Console.WriteLine("\n".PadRight(20, '\u2500'));
+        }
+
+        private static void ShowRes(Song it)
+        {
+            Console.Write("{0},  {1} {2}\n",
+                          it.NameSong, it.Author, it.TimeSong);
+        }
+
+        private static void ShowRes(int num, Song it)
+        {
+            Console.Write("{0}  {1}, {2} {3}\n",
+                          ++num, it.NameSong, it.Author, it.TimeSong);
         }
 
         public void AllView()
         {
             Console.WriteLine("\n".PadRight(20, '\u2500'));
-            GetPlaylistView();
+            ShowPlaylist();
         }
 
-        private static void GetItemView(IEnumerable fnd)
+        private static void ShowItem(Song fnd)
         {
             if (fnd == null) return;
             Console.WriteLine("\nSearch completed:\t");
-            foreach (var item in fnd) Console.Write("{0} ", item);
-
+            ShowRes(fnd);
             Console.WriteLine();
         }
 
@@ -119,16 +124,20 @@ namespace MusicPlayer.Models
             Console.Write("Enter the song Index in the playlist: ");
             Program.SetEnterDecimal(Console.ReadLine(), out var num);
             var fnd = GetSongByIndex(Convert.ToInt16(num));
-            if (fnd != null) GetItemView(fnd);
-            else Console.WriteLine("Search returned no results.");
+            if (fnd != null)
+                ShowItem(fnd);
+            else
+                Console.WriteLine("Search returned no results.");
         }
 
         public void FindByName()
         {
             Console.Write("Enter the song title in the playlist: ");
             var fnd = GetSongByName(Console.ReadLine());
-            if (fnd != null) GetItemView(fnd);
-            else Console.WriteLine("Search returned no results.");
+            if (fnd != null)
+                ShowItem(fnd);
+            else
+                Console.WriteLine("Search returned no results.");
         }
     }
 }

@@ -6,7 +6,6 @@ namespace MusicPlayer.Models
 {
     public abstract class PlayStateBase
     {
-        internal static bool ControlEvent { get; set; }
         internal const int Back = -1;
         internal const int Random = -2;
 
@@ -17,71 +16,25 @@ namespace MusicPlayer.Models
         private static readonly Random rng =
             new Random((int) DateTime.Now.Ticks & 0x0000FFFF);
 
-        internal void HeaderState(PlayList PlaySonglist, string state)
+        protected static bool ControlEvent { get; set; }
+
+        protected static void HeaderState(string state)
         {
             Console.CursorVisible = false;
             Console.WriteLine("*** {0} State: ***", state);
-
-            var cnt = PlaySonglist.GetCount();
-            Console.WriteLine("\nTotal recorded tracks in the playlist - {0}", cnt);
+            Console.WriteLine("\nTotal recorded tracks in the " +
+                              "playlist - {0}", PlayList.GetCount());
+            Console.WriteLine("Total recording time in the " +
+                              "playlist - {0}", PlayList.GetAllTime());
             Console.WriteLine("\n**************************");
         }
 
-        internal void FooterState()
+        protected static void FooterState()
         {
             Console.WriteLine("\nPress any key to return to the main menu.");
             Console.CursorVisible = false;
             Console.ReadLine();
             Console.Clear();
-        }
-
-        internal void SongHandler(PlayList PlaySonglist)
-        {
-            var cnt = PlaySonglist.GetCount();
-            for (var i = 0; i < cnt; i++)
-            {
-                SongHandler(PlaySonglist, i);
-            }
-
-            ControlEvent = true;
-        }
-
-        internal void SongHandler(PlayList PlaySonglist, int pos)
-        {
-            var idx = 0;
-            var cnt = PlaySonglist.GetCount();
-
-            switch (pos)
-            {
-                // play if pos==Back
-                case Back:
-                {
-                    for (var i = cnt - 1; i >= 0; i--)
-                    {
-                        SongHandler(PlaySonglist, i);
-                    }
-
-                    ControlEvent = true;
-                    break;
-                }
-                case Random:
-                {
-                    var tmpList = new int[cnt];
-                    for (var i = 0; i < cnt; i++) tmpList[i] = i;
-                    Shuffle(tmpList);
-
-                    foreach (var ps in tmpList)
-                    {
-                        SongHandler(PlaySonglist, ps);
-                    }
-
-                    ControlEvent = true;
-                    break;
-                }
-                default:
-                    SongHandler(PlaySonglist, pos, ref idx);
-                    break;
-            }
         }
 
         private static void Shuffle(IList<int> list)
@@ -97,28 +50,63 @@ namespace MusicPlayer.Models
             }
         }
 
-        internal void SongHandler(PlayList PlaySonglist, int pos, ref int idx)
+        public static void SongHandler(PlayList PlaySonglist)
         {
-            idx = pos;
-            var cnt = PlaySonglist.GetCount();
-            var tmpArray = PlaySonglist.GetSongByIndex(pos).ToArray();
-            var songTitle = tmpArray.GetValue(0).ToString();
-            var timeSong = tmpArray.GetValue(1).ToString();
-            var authSong = tmpArray.GetValue(2).ToString();
-            var input = idx + 1 + ". " + songTitle + " / " + authSong;
-            ProgressPlay(cnt, input, timeSong);
+            var cnt = PlayList.GetCount();
+            for (var i = 0; i < cnt; i++) SongHandler(PlaySonglist, i);
+
+            ControlEvent = true;
         }
 
-        internal void ProgressPlay(int cnt, string nameSong, string timeSongString)
+        public static void SongHandler(PlayList PlaySonglist, int direction)
+        {
+            var idx = 0;
+            var cnt = PlayList.GetCount();
+            switch (direction)
+            {
+                //plays backward if selected direction==Back
+                case Back:
+                {
+                    for (var i = cnt - 1; i >= 0; i--) SongHandler(PlaySonglist, i);
+
+                    ControlEvent = true;
+                    break;
+                }
+                //plays random if selected direction==Random
+                case Random:
+                {
+                    var tmpList = new int[cnt];
+                    for (var i = 0; i < cnt; i++) tmpList[i] = i;
+                    Shuffle(tmpList);
+
+                    foreach (var ps in tmpList) SongHandler(PlaySonglist, ps, ref idx);
+
+                    ControlEvent = true;
+                    break;
+                }
+                default:
+                    SongHandler(PlaySonglist, direction, ref idx);
+                    break;
+            }
+        }
+
+        private static void SongHandler(PlayList PlaySonglist, int pos, ref int idx)
+        {
+            idx = pos;
+            ProgressPlay(PlaySonglist.GetSongByIndex(pos),idx);
+        }
+
+        private static void ProgressPlay(Song song, int idx)
         {
             using (var progress = new ProgressBar())
             {
-                Console.WriteLine("\n {0} ", nameSong);
-                var timeSong = Convert.ToDateTime(timeSongString);
-                var longSong = timeSong.Hour * 3600 + timeSong.Minute * 60 +
+                song?.ShowRes(song);
+                var timeSong = Convert.ToDateTime(song?.TimeSong);
+                var longSong = timeSong.Hour * 3600 +
+                               timeSong.Minute * 60 +
                                timeSong.Second;
-                Console.WriteLine(" Song duration ({0}) = {1} sec.", timeSongString,
-                                  longSong);
+                Console.WriteLine("{0}. Song duration ({1}) = {2} sec.",
+                                  idx+1, song?.TimeSong, longSong);
                 var i = 0;
                 while (i++ <= longSong)
                 {
