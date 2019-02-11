@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 
 namespace MusicPlayer.Models
 {
@@ -12,13 +11,17 @@ namespace MusicPlayer.Models
             Author = author;
         }
 
-        public Song()
-        {
-        }
+        public Song() { }
 
-        public string NameSong { get; set; }
         public string TimeSong { get; set; }
         public string Author { get; set; }
+        public string NameSong { get; set; }
+
+        public void ShowRes(Song it)
+        {
+            Console.Write("{0},  {1} {2}\n",
+                          it.NameSong, it.Author, it.TimeSong);
+        }
 
         public void RecordSong()
         {
@@ -34,12 +37,6 @@ namespace MusicPlayer.Models
 
             Console.Write("\nThe name of the author: ");
             Author = Console.ReadLine();
-        }
-
-        public ArrayList GetPlaylistView()
-        {
-            return new ArrayList
-                {NameSong, TimeSong, Author};
         }
     }
 }

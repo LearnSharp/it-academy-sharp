@@ -15,7 +15,10 @@ namespace Player_Power
 
     public abstract class Power : IPlayer
     {
-        internal Power(IVoltage voltage) => Voltage = voltage;
+        internal Power(IVoltage voltage)
+        {
+            Voltage = voltage;
+        }
 
         public IVoltage Voltage { get; }
 

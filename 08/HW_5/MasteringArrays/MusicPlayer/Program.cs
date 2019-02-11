@@ -3,7 +3,7 @@ using MusicPlayer.Models;
 
 namespace MusicPlayer
 {
-    public partial class Program
+    public static partial class Program
     {
         public static PlayList CurrentPlaylist { get; set; } =
             new PlayList();

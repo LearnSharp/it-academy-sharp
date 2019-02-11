@@ -18,8 +18,7 @@ namespace MusicPlayer.Models
         protected virtual void ShowMenu()
         {
             Console.WriteLine("You have options:");
-            foreach (var m in Menus)
-                Console.WriteLine($"{m.Key} - {m.Value.Text}");
+            foreach (var m in Menus) Console.WriteLine($"{m.Key} - {m.Value.Text}");
         }
 
         protected virtual KeyValuePair<int, MenuItem> ReadOption()
