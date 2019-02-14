@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bigs", "Bigs\Bigs.csproj", "{560A2590-C306-482C-A59F-C199521C5C4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceMonitoring", "ResourceMonitoring\ResourceMonitoring.csproj", "{ED69073C-F071-414B-AD84-D519F8976379}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{560A2590-C306-482C-A59F-C199521C5C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{560A2590-C306-482C-A59F-C199521C5C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{560A2590-C306-482C-A59F-C199521C5C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED69073C-F071-414B-AD84-D519F8976379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED69073C-F071-414B-AD84-D519F8976379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED69073C-F071-414B-AD84-D519F8976379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED69073C-F071-414B-AD84-D519F8976379}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

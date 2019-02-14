@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime;
 using System.Threading;
 
 namespace Bigs
@@ -8,6 +7,8 @@ namespace Bigs
     internal sealed class BigObject : IDisposable
     {
         private readonly List<List<decimal>> _vs;
+
+        private bool disposed = false;
 
         public BigObject()
         {
@@ -22,7 +23,11 @@ namespace Bigs
             }
         }
 
-        private bool disposed = false;
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         private void Dispose(bool disposing)
         {
@@ -38,12 +43,6 @@ namespace Bigs
                 // освобождаем неуправляемые объекты
                 disposed = true;
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         ~BigObject()
@@ -66,18 +65,26 @@ namespace Bigs
             var bigObject = new BigObject();
 
             Console.WriteLine(GC.GetGeneration(bigObject));
+            Console.WriteLine(GC.GetTotalMemory(false));
 
             bigObject.Dispose();
 
             Console.WriteLine(GC.GetGeneration(bigObject));
+            Console.WriteLine(GC.GetTotalMemory(false));
+            Console.WriteLine("********************************");
 
             using (var bigObject1 = new BigObject())
             {
                 Console.WriteLine(GC.GetGeneration(bigObject1));
+                Console.WriteLine(GC.GetTotalMemory(false));
             }
 
+            Console.WriteLine(GC.GetTotalMemory(false));
             var bigObject2 = new BigObject();
-            GC.Collect();
+            Console.WriteLine(GC.GetTotalMemory(false));
+            GC.Collect(2);
+            Console.WriteLine(GC.GetTotalMemory(false));
+
 
             Console.WriteLine("\nGetGeneration:");
             Console.WriteLine(GC.GetGeneration(bigObject));
