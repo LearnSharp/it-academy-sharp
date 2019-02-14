@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime;
+//using System.Runtime;
 using System.Threading;
 
 namespace Bigs
@@ -66,18 +66,26 @@ namespace Bigs
             var bigObject = new BigObject();
 
             Console.WriteLine(GC.GetGeneration(bigObject));
+            Console.WriteLine(GC.GetTotalMemory(false));
 
             bigObject.Dispose();
 
             Console.WriteLine(GC.GetGeneration(bigObject));
+            Console.WriteLine(GC.GetTotalMemory(false));
+            Console.WriteLine("********************************");
 
             using (var bigObject1 = new BigObject())
             {
                 Console.WriteLine(GC.GetGeneration(bigObject1));
+                Console.WriteLine(GC.GetTotalMemory(false));
             }
 
+            Console.WriteLine(GC.GetTotalMemory(false));
             var bigObject2 = new BigObject();
-            GC.Collect();
+            Console.WriteLine(GC.GetTotalMemory(false));
+            GC.Collect(2);
+            Console.WriteLine(GC.GetTotalMemory(false));
+
 
             Console.WriteLine("\nGetGeneration:");
             Console.WriteLine(GC.GetGeneration(bigObject));
