@@ -72,7 +72,8 @@ namespace ServiceSubscriber
             // John Dow subscribes the ValueChanged() event of NY Times.
             notifierA.ValueChanged += observerX.NotifierValueChanged;
 
-            // Kid from Chizhovka subscribes the ValueChanged() event of NY Times and B.
+            // Kid from Chizhovka subscribes the ValueChanged()
+            // event of NY Times and Sovetskaya Belorussia.
             notifierA.ValueChanged += observerY.NotifierValueChanged;
             notifierB.ValueChanged += observerY.NotifierValueChanged;
 
