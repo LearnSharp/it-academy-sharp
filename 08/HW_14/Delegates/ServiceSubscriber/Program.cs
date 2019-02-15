@@ -76,13 +76,13 @@ namespace ServiceSubscriber
             notifierA.ValueChanged += observerY.NotifierValueChanged;
             notifierB.ValueChanged += observerY.NotifierValueChanged;
 
-            // Change the value of NY Times - this will notify John Dow and Y.
+            // Change the value of NY Times - this will notify John Dow and Kid from Chizhovka.
             notifierA.ChangeValue("Snow fell all over America!");
 
             // Change the value of Sovetskaya Belorussia - this will only notify Kid from Chizhovka.
             notifierB.ChangeValue("All of America is suddenly moving to Belarus.");
 
-            // No one will be notified about this, because the value is the same..
+            // No one will be notified about this, because the value is the same.
             notifierA.ChangeValue("Snow fell all over America!");
 
             // This will not notify John Dow and Kid from Chizhovka again.
