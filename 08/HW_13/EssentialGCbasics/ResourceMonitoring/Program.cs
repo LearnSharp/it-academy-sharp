@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace ResourceMonitoring
 {
@@ -37,7 +35,10 @@ namespace ResourceMonitoring
             for (var i = 0; i < 5; i++)
             {
                 Console.Write("{0}. ", i + 1);
-                using (new BigObject()) mon.Control();
+                var bigObject = new BigObject();
+                mon.Control();
+                //bigObject.Dispose(); // <- using clearing memory with GC
+                Console.WriteLine();
             }
         }
 
@@ -50,7 +51,7 @@ namespace ResourceMonitoring
             public BigObject()
             {
                 _vs = new List<List<decimal>>();
-                const int MaxCount = 500;
+                const int MaxCount = 800;
                 const decimal Value = 1000000;
                 for (var i = 0; i < MaxCount; i++)
                 {
@@ -75,8 +76,10 @@ namespace ResourceMonitoring
                 {
                     if (disposing)
                     {
+                        GC.WaitForPendingFinalizers();
                         Console.WriteLine("Big Object {0} was destroyed...\n",
                                           GetHashCode());
+                        GC.Collect();
                     }
 
                     disposed = true;
