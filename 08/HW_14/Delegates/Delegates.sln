@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceSubscriber", "ServiceSubscriber\ServiceSubscriber.csproj", "{A61932C5-64E3-4A42-A43B-D55F6FD609E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsObserver", "NewsObserver\NewsObserver.csproj", "{7925A1D1-AE13-47CC-AFF9-40366B3A263C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A61932C5-64E3-4A42-A43B-D55F6FD609E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A61932C5-64E3-4A42-A43B-D55F6FD609E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A61932C5-64E3-4A42-A43B-D55F6FD609E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A61932C5-64E3-4A42-A43B-D55F6FD609E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7925A1D1-AE13-47CC-AFF9-40366B3A263C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7925A1D1-AE13-47CC-AFF9-40366B3A263C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7925A1D1-AE13-47CC-AFF9-40366B3A263C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7925A1D1-AE13-47CC-AFF9-40366B3A263C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1C818E9-DD4F-44BB-B92A-15349A61F595}
+	EndGlobalSection
+EndGlobal
