@@ -13,7 +13,7 @@ namespace Bigs
         public BigObject()
         {
             _vs = new List<List<decimal>>();
-            const int MaxCount = 500;
+            const int MaxCount = 800;
             const decimal Value = 1000000;
             for (var i = 0; i < MaxCount; i++)
             {
@@ -37,7 +37,8 @@ namespace Bigs
                 {
                     // Освобождаем управляемые ресурсы
                     GC.WaitForPendingFinalizers();
-                    Console.WriteLine("Big Object was destroyed...");
+                    Console.WriteLine("Big Object {0} was destroyed...\n", GetHashCode());
+                    GC.Collect(2);
                 }
 
                 // освобождаем неуправляемые объекты
@@ -53,44 +54,52 @@ namespace Bigs
                 Thread.Sleep(150);
             }
 
-            Console.WriteLine();
+            Console.WriteLine("\n");
             Dispose(false);
         }
     }
 
     internal static class Program
     {
+        private static void ShowMemory()
+        {
+            Console.WriteLine("Available memory {0:### ### ### Kb}",
+                              GC.GetTotalMemory(false) >> 10);
+        }
+
+        private static void ShowObjectInfo(object obj)
+        {
+            Console.WriteLine("This is the hash code of the new object: {0}",
+                              obj.GetHashCode());
+            Console.WriteLine("GetGeneration: {0}", GC.GetGeneration(obj));
+        }
+
         private static void Main()
         {
-            var bigObject = new BigObject();
+            ShowMemory();
 
-            Console.WriteLine(GC.GetGeneration(bigObject));
-            Console.WriteLine(GC.GetTotalMemory(false));
+            var bigObject = new BigObject();
+            ShowObjectInfo(bigObject);
+            ShowMemory();
 
             bigObject.Dispose();
+            ShowMemory();
 
-            Console.WriteLine(GC.GetGeneration(bigObject));
-            Console.WriteLine(GC.GetTotalMemory(false));
-            Console.WriteLine("********************************");
-
+            Console.WriteLine("*".PadRight(40, '*'));
             using (var bigObject1 = new BigObject())
             {
-                Console.WriteLine(GC.GetGeneration(bigObject1));
-                Console.WriteLine(GC.GetTotalMemory(false));
+                ShowObjectInfo(bigObject1);
+                ShowMemory();
             }
 
-            Console.WriteLine(GC.GetTotalMemory(false));
+            ShowMemory();
             var bigObject2 = new BigObject();
-            Console.WriteLine(GC.GetTotalMemory(false));
-            GC.Collect(2);
-            Console.WriteLine(GC.GetTotalMemory(false));
+            ShowObjectInfo(bigObject2);
+            ShowMemory();
 
-
-            Console.WriteLine("\nGetGeneration:");
-            Console.WriteLine(GC.GetGeneration(bigObject));
-            Console.WriteLine(GC.GetGeneration(bigObject2));
-
-            Console.WriteLine();
+            var bigObject3 = new BigObject();
+            ShowObjectInfo(bigObject3);
+            ShowMemory();
         }
     }
 }

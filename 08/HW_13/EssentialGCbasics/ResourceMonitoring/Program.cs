@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace ResourceMonitoring
 {
@@ -31,19 +30,15 @@ namespace ResourceMonitoring
 
         private static void Main()
         {
-            Console.WriteLine(GC.GetTotalMemory(false));
-
             var mon = new Monitoring();
-            mon.Control();
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 5; i++)
             {
+                Console.Write("{0}. ", i + 1);
+                var bigObject = new BigObject();
                 mon.Control();
-                using (new BigObject())
-                {
-                    Console.WriteLine(GC.GetTotalMemory(false));
-                    mon.Control();
-                }
+                //bigObject.Dispose(); // <- using clearing memory with GC
+                Console.WriteLine();
             }
         }
 
@@ -56,7 +51,7 @@ namespace ResourceMonitoring
             public BigObject()
             {
                 _vs = new List<List<decimal>>();
-                const int MaxCount = 500;
+                const int MaxCount = 800;
                 const decimal Value = 1000000;
                 for (var i = 0; i < MaxCount; i++)
                 {
@@ -64,6 +59,9 @@ namespace ResourceMonitoring
                     for (var j = 0; j < MaxCount; j++) tmp.Add(Value);
                     _vs.Add(tmp);
                 }
+
+                Console.WriteLine("This is the hash code of the new object: {0},",
+                                  GetHashCode());
             }
 
             public void Dispose()
@@ -79,7 +77,9 @@ namespace ResourceMonitoring
                     if (disposing)
                     {
                         GC.WaitForPendingFinalizers();
-                        Console.WriteLine("Big Object was destroyed...");
+                        Console.WriteLine("Big Object {0} was destroyed...\n",
+                                          GetHashCode());
+                        GC.Collect();
                     }
 
                     disposed = true;
@@ -88,13 +88,6 @@ namespace ResourceMonitoring
 
             ~BigObject()
             {
-                for (var i = 0; i < 20; i++)
-                {
-                    Console.Write('.');
-                    Thread.Sleep(150);
-                }
-
-                Console.WriteLine();
                 Dispose(false);
             }
         }
@@ -107,26 +100,37 @@ namespace ResourceMonitoring
 
             private static uint SetValueDeviationControl()
             {
-                Console.WriteLine("Enter the max value control of deviation level (byte): ");
+                Console.Write("Enter the max value control \nof deviation level (byte): ");
                 return SetUint(Console.ReadLine());
             }
 
             public void Control()
             {
                 var availableMemory = GC.GetTotalMemory(false) - _deviationLavel;
-                if (availableMemory <= _deviationLavel)
+
+                if (availableMemory > _deviationLavel)
+                {
+                    ShowMemory((uint) GC.GetTotalMemory(false), (uint) availableMemory);
+                }
+                else
                 {
                     availableMemory = availableMemory < 0 ? 0 : availableMemory;
                     ShowAlarm((uint) GC.GetTotalMemory(false), (uint) availableMemory);
                 }
             }
 
+            private void ShowMemory(uint total, uint available)
+            {
+                Console.WriteLine("Available memory {0:### ### ### Kb}, " +
+                                  " available user memory {1:### ### ### Kb};",
+                                  total >> 10, available >> 10);
+            }
+
             private void ShowAlarm(uint total, uint available)
             {
-                Console.WriteLine("Attention! You are approaching a given level of " +
+                Console.WriteLine("\nAttention! You are approaching a given level of " +
                                   "maximum memory consumption!");
-                Console.WriteLine("Available memory {0} byte, available user memory {1} byte.",
-                                  total, available);
+                ShowMemory(total, available);
             }
         }
     }
