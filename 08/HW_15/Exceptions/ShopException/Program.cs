@@ -79,35 +79,56 @@ namespace ShopException
                     ShopId = 1,
                     Id = 1,
                     ProductName = (int) Product.bread,
-                    CostOfGoods = 10
+                    CostOfGoods = 10.12
                 },
                 new Price
                 {
                     ShopId = 1,
                     Id = 2,
                     ProductName = (int) Product.crackers,
-                    CostOfGoods = 12
+                    CostOfGoods = 12.51
                 },
                 new Price
                 {
                     ShopId = 1,
                     Id = 3,
                     ProductName = (int) Product.kefir,
-                    CostOfGoods = 2
+                    CostOfGoods = 2.13
                 },
                 new Price
                 {
                     ShopId = 1,
                     Id = 4,
                     ProductName = (int) Product.capelin,
-                    CostOfGoods = 14
+                    CostOfGoods = 14.84
                 },
                 new Price
                 {
                     ShopId = 1,
                     Id = 5,
                     ProductName = (int) Product.perch,
-                    CostOfGoods = 7
+                    CostOfGoods = 7.49
+                },
+                new Price
+                {
+                    ShopId = 2,
+                    Id = 1,
+                    ProductName = (int) Product.bread,
+                    CostOfGoods = 10.12
+                },
+                new Price
+                {
+                    ShopId = 2,
+                    Id = 2,
+                    ProductName = (int) Product.crackers,
+                    CostOfGoods = 12.51
+                },
+                new Price
+                {
+                    ShopId = 2,
+                    Id = 3,
+                    ProductName = (int) Product.kefir,
+                    CostOfGoods = 2.13
                 },
             };
 
@@ -119,11 +140,11 @@ namespace ShopException
             };
 
             var xGoods =
-                from p in prices
-                join c in shops on p.ShopId equals c.Id
-                where c.ShopName== "Selpo_1"
-                orderby p.CostOfGoods
-                select new {c.ShopName, p.ProductName, p.CostOfGoods};
+                from price in prices
+                join shop in shops on price.ShopId equals shop.Id
+                //where shop.ShopName== "Selpo_1"
+                orderby shop.ShopName, price.CostOfGoods
+                select new {shop.ShopName, price.ProductName, price.CostOfGoods};
 
 
             foreach (var item in xGoods)
