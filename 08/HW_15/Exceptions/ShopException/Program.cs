@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopException
 {
@@ -12,15 +10,12 @@ namespace ShopException
         public string ShopName { get; set; }
         private ICollection<Price> Prices { get; set; }
 
-        public Shop()
-        {
-            Prices = new List<Price>();
-        }
+        public Shop() => Prices = new List<Price>();
     }
 
     public class Price
     {
-        public Shop Shop { get; set; }
+        private Shop Shop { get; set; }
         public int? ShopId { get; set; }
 
         public int Id { get; set; }
@@ -29,7 +24,7 @@ namespace ShopException
     }
 
 
-    internal static class Program
+    internal class Program
     {
         [Flags] // bit group: 15, 240, 3840
         private enum Product
@@ -60,19 +55,9 @@ namespace ShopException
             bakery = 3840
         }
 
-        private static void Main()
+        private static IEnumerable<Price> GetPrices()
         {
-        #region Goods
-
-            Console.WriteLine("All products provided:");
-            Console.WriteLine((Product) Group.dairy);
-            Console.WriteLine((Product) Group.fish);
-            Console.WriteLine((Product) Group.bakery);
-            Console.WriteLine();
-
-        #endregion Goods
-
-            var prices = new List<Price>
+            return new List<Price>
             {
                 new Price
                 {
@@ -131,13 +116,32 @@ namespace ShopException
                     CostOfGoods = 2.13
                 },
             };
+        }
 
-            var shops = new List<Shop>
+        private static IEnumerable<Shop> GetShops()
+        {
+            return new List<Shop>
             {
                 new Shop {Id = 1, ShopName = "Selpo_1"},
                 new Shop {Id = 2, ShopName = "Selpo_2"},
                 new Shop {Id = 3, ShopName = "Selpo_3"}
             };
+        }
+
+        private static void Main()
+        {
+        #region Goods
+
+            Console.WriteLine("All products provided:");
+            Console.WriteLine((Product) Group.dairy);
+            Console.WriteLine((Product) Group.fish);
+            Console.WriteLine((Product) Group.bakery);
+            Console.WriteLine();
+
+        #endregion Goods
+
+            var prices = GetPrices();
+            var shops = GetShops();
 
             var xGoods =
                 from price in prices
@@ -146,13 +150,16 @@ namespace ShopException
                 orderby shop.ShopName, price.CostOfGoods
                 select new {shop.ShopName, price.ProductName, price.CostOfGoods};
 
-
+            var i = 0;
             foreach (var item in xGoods)
             {
-                Console.WriteLine("{1}".PadRight(10, ' ') + "\t= {0} price - {2:f}",
+                Console.WriteLine(++i + ". {1} ".PadRight(14, ' ') + "\t{0}  price - {2:f}",
                                   item.ShopName, (Product) item.ProductName,
                                   item.CostOfGoods);
+
             }
+
+                Console.WriteLine("\n \n \n");
         }
     }
 }
