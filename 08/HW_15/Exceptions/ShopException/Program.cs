@@ -21,15 +21,13 @@ namespace ShopException
     public class Price
     {
         public Shop Shop { get; set; }
-
         public int? ShopId { get; set; }
-        public int Id { get; set; }
 
+        public int Id { get; set; }
         public int ProductName { get; set; }
         public double CostOfGoods { get; set; }
     }
 
-#region Test
 
     internal static class Program
     {
@@ -64,23 +62,52 @@ namespace ShopException
 
         private static void Main()
         {
+        #region Goods
+
+            Console.WriteLine("All products provided:");
             Console.WriteLine((Product) Group.dairy);
             Console.WriteLine((Product) Group.fish);
             Console.WriteLine((Product) Group.bakery);
+            Console.WriteLine();
 
-        #endregion Test
+        #endregion Goods
 
             var prices = new List<Price>
             {
                 new Price
                 {
-                    ShopId = 1, Id = 1, ProductName = (int) Product.bread,
+                    ShopId = 1,
+                    Id = 1,
+                    ProductName = (int) Product.bread,
                     CostOfGoods = 10
                 },
                 new Price
                 {
-                    ShopId = 1, Id = 2, ProductName = (int) Product.capelin,
+                    ShopId = 1,
+                    Id = 2,
+                    ProductName = (int) Product.crackers,
                     CostOfGoods = 12
+                },
+                new Price
+                {
+                    ShopId = 1,
+                    Id = 3,
+                    ProductName = (int) Product.kefir,
+                    CostOfGoods = 2
+                },
+                new Price
+                {
+                    ShopId = 1,
+                    Id = 4,
+                    ProductName = (int) Product.capelin,
+                    CostOfGoods = 14
+                },
+                new Price
+                {
+                    ShopId = 1,
+                    Id = 5,
+                    ProductName = (int) Product.perch,
+                    CostOfGoods = 7
                 },
             };
 
@@ -90,6 +117,21 @@ namespace ShopException
                 new Shop {Id = 2, ShopName = "Selpo_2"},
                 new Shop {Id = 3, ShopName = "Selpo_3"}
             };
+
+            var xGoods =
+                from p in prices
+                join c in shops on p.ShopId equals c.Id
+                where c.ShopName== "Selpo_1"
+                orderby p.CostOfGoods
+                select new {c.ShopName, p.ProductName, p.CostOfGoods};
+
+
+            foreach (var item in xGoods)
+            {
+                Console.WriteLine("{1}".PadRight(10, ' ') + "\t= {0} price - {2:f}",
+                                  item.ShopName, (Product) item.ProductName,
+                                  item.CostOfGoods);
+            }
         }
     }
 }
