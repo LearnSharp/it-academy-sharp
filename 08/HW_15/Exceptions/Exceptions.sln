@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopException", "ShopExcept
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassException", "ClassException\ClassException.csproj", "{9582EBA2-5898-4C93-BF60-8AB45105D0EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgeUserException", "AgeUserException\AgeUserException.csproj", "{B3AA9B91-15CA-45AC-99E9-C6648F845386}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9582EBA2-5898-4C93-BF60-8AB45105D0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9582EBA2-5898-4C93-BF60-8AB45105D0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9582EBA2-5898-4C93-BF60-8AB45105D0EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3AA9B91-15CA-45AC-99E9-C6648F845386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3AA9B91-15CA-45AC-99E9-C6648F845386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3AA9B91-15CA-45AC-99E9-C6648F845386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3AA9B91-15CA-45AC-99E9-C6648F845386}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
