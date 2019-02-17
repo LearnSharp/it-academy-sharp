@@ -6,16 +6,16 @@ namespace ShopException
 {
     public class Shop
     {
+        public Shop() => Prices = new List<Price>();
         public int Id { get; set; }
         public string ShopName { get; set; }
-        private ICollection<Price> Prices { get; set; }
 
-        public Shop() => Prices = new List<Price>();
+        private ICollection<Price> Prices { get; } // <--
     }
 
     public class Price
     {
-        private Shop Shop { get; set; }
+        private Shop Shop { get; set; } // <--
         public int? ShopId { get; set; }
 
         public int Id { get; set; }
@@ -23,38 +23,8 @@ namespace ShopException
         public double CostOfGoods { get; set; }
     }
 
-
     internal class Program
     {
-        [Flags] // bit group: 15, 240, 3840
-        private enum Product
-        {
-            //------dairy------15
-            milk = 1,
-            cheese = 2,
-            kefir = 4,
-            butter = 8,
-
-            //------fish-------240
-            herring = 16,
-            capelin = 32,
-            halibut = 64,
-            perch = 128,
-
-            //------bakery-------3840
-            bread = 256,
-            loaf = 512,
-            biscuits = 1024,
-            crackers = 2048
-        }
-
-        private enum Group // name bit group
-        {
-            dairy = 15,
-            fish = 240,
-            bakery = 3840
-        }
-
         private static IEnumerable<Price> GetPrices()
         {
             return new List<Price>
@@ -114,7 +84,7 @@ namespace ShopException
                     Id = 3,
                     ProductName = (int) Product.kefir,
                     CostOfGoods = 2.13
-                },
+                }
             };
         }
 
@@ -140,26 +110,63 @@ namespace ShopException
 
         #endregion Goods
 
-            var prices = GetPrices();
-            var shops = GetShops();
+            var prices = GetPrices().ToList();
+            var shops = GetShops().ToList();
+
+            Console.Write("Enter Shop name: ");
+            var inputShop = Console.ReadLine();
+            try
+            {
+                inputShop = shops.First(x => x.ShopName == inputShop).ShopName;
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine($"This Shop [{inputShop}] is missing!");
+            }
 
             var xGoods =
                 from price in prices
                 join shop in shops on price.ShopId equals shop.Id
-                //where shop.ShopName== "Selpo_1"
+                where shop.ShopName == inputShop
                 orderby shop.ShopName, price.CostOfGoods
                 select new {shop.ShopName, price.ProductName, price.CostOfGoods};
 
             var i = 0;
             foreach (var item in xGoods)
-            {
                 Console.WriteLine(++i + ". {1} ".PadRight(14, ' ') + "\t{0}  price - {2:f}",
                                   item.ShopName, (Product) item.ProductName,
                                   item.CostOfGoods);
 
-            }
+            Console.WriteLine("\n \n \n");
+        }
 
-                Console.WriteLine("\n \n \n");
+        [Flags] // bit group: 15, 240, 3840
+        private enum Product
+        {
+            //------dairy------15
+            milk = 1,
+            cheese = 2,
+            kefir = 4,
+            butter = 8,
+
+            //------fish-------240
+            herring = 16,
+            capelin = 32,
+            halibut = 64,
+            perch = 128,
+
+            //------bakery-------3840
+            bread = 256,
+            loaf = 512,
+            biscuits = 1024,
+            crackers = 2048
+        }
+
+        private enum Group // name bit group
+        {
+            dairy = 15,
+            fish = 240,
+            bakery = 3840
         }
     }
 }
