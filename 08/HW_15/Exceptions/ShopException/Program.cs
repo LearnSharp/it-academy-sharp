@@ -110,7 +110,7 @@ namespace ShopException
 
         #endregion Goods
 
-            var prices = GetPrices().ToList();
+            var prices = GetPrices();
             var shops = GetShops().ToList();
 
             Console.Write("Enter Shop name: ");
