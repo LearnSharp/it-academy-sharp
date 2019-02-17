@@ -98,6 +98,50 @@ namespace ShopException
             };
         }
 
+        private static string GetValidName()
+        {
+            var inputShop = "";
+            try
+            {
+                Console.Write("Enter Shop name: ");
+                inputShop = Console.ReadLine();
+                if (string.IsNullOrEmpty(inputShop) || inputShop.Length > 15)
+                    throw new InvalidOperationException("Store name cannot " +
+                                                        "be empty or more " +
+                                                        "than 15 characters.");
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine($"An exception occurred:\n {e.Message}");
+                throw;
+            }
+
+            return inputShop;
+        }
+
+        private static void ShowShop(dynamic xGoods)
+        {
+            var i = 0;
+            foreach (var item in xGoods)
+                Console
+                    .WriteLine(++i + ". {1} ".PadRight(14, ' ') + "\t{0}  price - {2:f}",
+                               item.ShopName, (Product) item.ProductName,
+                               item.CostOfGoods);
+        }
+
+        private static dynamic GetShop(IEnumerable<Price> prices,
+                                       IEnumerable<Shop> shops, string inputShop)
+        {
+            var enumerable = shops.ToList();
+            return
+                from price in prices
+                join shop in enumerable on price.ShopId equals shop.Id
+                where shop.ShopName ==
+                      enumerable.First(x => x.ShopName == inputShop).ShopName
+                orderby shop.ShopName, price.CostOfGoods
+                select new {shop.ShopName, price.ProductName, price.CostOfGoods};
+        }
+
         private static void Main()
         {
         #region Goods
@@ -110,32 +154,16 @@ namespace ShopException
 
         #endregion Goods
 
-            var prices = GetPrices();
-            var shops = GetShops().ToList();
-
-            Console.Write("Enter Shop name: ");
-            var inputShop = Console.ReadLine();
+            var inputShop = "";
             try
             {
-                inputShop = shops.First(x => x.ShopName == inputShop).ShopName;
+                inputShop = GetValidName();
+                ShowShop(GetShop(GetPrices(), GetShops(), inputShop));
             }
             catch (InvalidOperationException)
             {
-                Console.WriteLine($"This Shop [{inputShop}] is missing!");
+                Console.WriteLine($"This Shop '{inputShop}' is missing!");
             }
-
-            var xGoods =
-                from price in prices
-                join shop in shops on price.ShopId equals shop.Id
-                where shop.ShopName == inputShop
-                orderby shop.ShopName, price.CostOfGoods
-                select new {shop.ShopName, price.ProductName, price.CostOfGoods};
-
-            var i = 0;
-            foreach (var item in xGoods)
-                Console.WriteLine(++i + ". {1} ".PadRight(14, ' ') + "\t{0}  price - {2:f}",
-                                  item.ShopName, (Product) item.ProductName,
-                                  item.CostOfGoods);
 
             Console.WriteLine("\n \n \n");
         }
