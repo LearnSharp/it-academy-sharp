@@ -1,5 +1,4 @@
 ﻿using MusicPlayer.Interface;
-using static MusicPlayer.Program;
 
 namespace MusicPlayer.Models
 {
@@ -18,10 +17,10 @@ namespace MusicPlayer.Models
 
         private static void HandLoopForward()
         {
-            do
-            {
-                SongHandler(CurrentPlaylist);
-            } while (!ControlEvent);
+            //do
+            //{
+                SongHandler();
+            //} while (!ControlEvent);
         }
 
         private delegate void HandlerEsc();

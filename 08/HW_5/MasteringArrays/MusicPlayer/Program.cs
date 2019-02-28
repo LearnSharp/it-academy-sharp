@@ -5,8 +5,8 @@ namespace MusicPlayer
 {
     public static partial class Program
     {
-        public static PlayList CurrentPlaylist { get; set; } =
-            new PlayList();
+        public static PlayList
+            CurrentPlaylist { get; set; } = new PlayList();
 
         private static void LoadContent()
         {

@@ -48,7 +48,7 @@ namespace AgeUserException
         {
             try
             {
-                var person = new Person(96, "Tommy");
+                var person = new Person(19, "Tommy");
                 person.ShowPerson();
             }
             catch (DivideByZeroException)
