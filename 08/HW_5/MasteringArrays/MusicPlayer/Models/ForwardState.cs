@@ -1,4 +1,6 @@
-﻿using MusicPlayer.Interface;
+﻿using System;
+using System.Threading;
+using MusicPlayer.Interface;
 
 namespace MusicPlayer.Models
 {
@@ -6,23 +8,22 @@ namespace MusicPlayer.Models
     {
         IState IState.RunState()
         {
-            HandlerEsc handlerEsc = HandLoopForward;
             HeaderState(StForward);
 
-            handlerEsc();
+            var newThreadFind = new Thread(InterruptEndExecuteFindSong);
+            newThreadFind.Start();
+
+            SongHandler(Forward);
 
             FooterState();
             return new MenuPlay();
         }
 
-        private static void HandLoopForward()
-        {
-            //do
-            //{
-                SongHandler();
-            //} while (!ControlEvent);
-        }
 
-        private delegate void HandlerEsc();
+        private static void InterruptEndExecuteFindSong()
+        {
+            while (Console.KeyAvailable) Console.ReadKey(false);
+            if (Console.ReadKey(false).Key == ConsoleKey.F) IsSeek = true;
+        }
     }
 }

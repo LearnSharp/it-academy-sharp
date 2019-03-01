@@ -6,8 +6,9 @@ namespace MusicPlayer.Models
 {
     public abstract class PlayStateBase
     {
-        internal const int Back = -1;
-        internal const int Random = -2;
+        internal const int Forward = -1;
+        internal const int Back = -2;
+        internal const int Random = -3;
 
         internal const string StForward = "Forward";
         internal const string StBack = "Back";
@@ -51,34 +52,28 @@ namespace MusicPlayer.Models
             }
         }
 
-        public static void SongHandler()
-        {
-            var cnt = PlayList.GetCount();
-            for (var i = 0; i < cnt; i++) SongHandler(i);
-        }
-
         public static void SongHandler(int direction)
         {
             var idx = direction;
             var cnt = PlayList.GetCount();
+            var tmpList = new int[cnt];
+
+            for (var i = 0; i < cnt; i++) tmpList[i] = i + 1;
+
             if (direction == Back)
             {
-                for (var i = cnt - 1; i >= 0; i--) SongHandler(i);
+                for (int i = 0, j = cnt - 1; i < cnt; i++, j--) tmpList[i] = j + 1;
             }
-            else if (direction == Random)
+
+            if (direction == Random)
             {
-                var tmpList = new int[cnt];
-                for (var i = 0; i < cnt; i++) tmpList[i] = i;
                 Shuffle(tmpList);
-                foreach (var ps in tmpList)
-                {
-                    if (idx == 0) break;
-                    SongHandler(ps, ref idx);
-                }
             }
-            else
+
+            foreach (var ps in tmpList)
             {
-                SongHandler(direction, ref idx);
+                if (idx == 0) break;
+                SongHandler(ps - 1, ref idx);
             }
         }
 
@@ -90,11 +85,14 @@ namespace MusicPlayer.Models
                 Console.Clear();
                 PlayList.AddOneSong(PlayList.FindByIndex());
                 IsSeek = false;
+                HeaderState("With added tracks.");
                 SongHandler(direction);
                 direction = 0;
             }
             else
+            {
                 ProgressPlay(PlayList.GetSongByIndex(p), p);
+            }
         }
 
         private static void ProgressPlay(Song song, int idx)
