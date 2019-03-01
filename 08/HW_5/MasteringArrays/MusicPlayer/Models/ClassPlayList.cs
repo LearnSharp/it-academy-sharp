@@ -8,13 +8,13 @@ namespace MusicPlayer.Models
     {
         public PlayList()
         {
-            Playlist = new List<Song>();
+            CurrentPlaylist = new List<Song>();
 
             //** set for example date
             SetExampleDate();
         }
 
-        private static List<Song> Playlist { get; set; }
+        private static List<Song> CurrentPlaylist { get; set; }
 
         private static void SetExampleDate()
         {
@@ -46,49 +46,48 @@ namespace MusicPlayer.Models
             //AddOneSong(new Song("My Apocalypse", "00:00:02", "Metallica"));
         }
 
-        public Song GetSongByIndex(int index)
+        public static Song GetSongByIndex(int index)
         {
-            return Playlist.ElementAtOrDefault(index);
+            return CurrentPlaylist.ElementAtOrDefault(index);
         }
 
-        private Song GetSongByName(string name)
+        public static Song GetSongByName(string name)
         {
-            return Playlist.Single(x => x.NameSong == name);
+            return CurrentPlaylist.Single(x => x.NameSong == name);
         }
 
         public static void AddOneSong(Song song)
         {
-            Playlist.Add(song);
+            CurrentPlaylist.Add(song);
         }
 
         public void AddAtIndexSong(int index, Song song)
         {
-            Playlist.Insert(index, song);
+            CurrentPlaylist.Insert(index, song);
         }
 
         public static int GetCount()
         {
-            return Playlist.Count;
+            return CurrentPlaylist?.Count ?? 0;
         }
 
         public static string GetAllTime()
         {
             var seconds = 0;
-            foreach (var song in Playlist)
-            {
-                seconds += Convert.ToDateTime(song.TimeSong).Second;
-            }
+            if (CurrentPlaylist != null)
+                foreach (var song in CurrentPlaylist)
+                    seconds += Convert.ToDateTime(song.TimeSong).Second;
 
             return TimeSpan.FromSeconds(seconds).ToString(@"hh\:mm\:ss");
         }
 
         private static void ShowPlaylist()
         {
-            if (!Playlist.Any()) return;
+            if (!CurrentPlaylist.Any()) return;
             Console.WriteLine("Introduced Playlist:\n"
                                   .PadRight(20, '\u2500'));
             var num = 0;
-            foreach (var it in Playlist) ShowRes(num, it);
+            foreach (var it in CurrentPlaylist) ShowRes(num, it);
 
             Console.WriteLine("\n".PadRight(20, '\u2500'));
         }
@@ -119,25 +118,23 @@ namespace MusicPlayer.Models
             Console.WriteLine();
         }
 
-        public void FindByIndex()
+        public static Song FindByIndex()
         {
             Console.Write("Enter the song Index in the playlist: ");
             Program.SetEnterDecimal(Console.ReadLine(), out var num);
             var fnd = GetSongByIndex(Convert.ToInt16(num));
-            if (fnd != null)
-                ShowItem(fnd);
-            else
-                Console.WriteLine("Search returned no results.");
+            if (fnd != null) return fnd;
+            Console.WriteLine("Search returned no results. The first track will be played.");
+            return GetSongByIndex(0);
         }
 
-        public void FindByName()
+        public static Song FindByName()
         {
             Console.Write("Enter the song title in the playlist: ");
             var fnd = GetSongByName(Console.ReadLine());
-            if (fnd != null)
-                ShowItem(fnd);
-            else
-                Console.WriteLine("Search returned no results.");
+            if (fnd != null) return fnd;
+            Console.WriteLine("Search returned no results. The first track will be played.");
+            return GetSongByIndex(0);
         }
     }
 }

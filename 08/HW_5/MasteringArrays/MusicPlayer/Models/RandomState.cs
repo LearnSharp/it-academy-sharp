@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MusicPlayer.Interface;
-using static MusicPlayer.Program;
 
 namespace MusicPlayer.Models
 {
@@ -9,38 +9,22 @@ namespace MusicPlayer.Models
     {
         IState IState.RunState()
         {
-            HandlerEsc handlerEsc = HandLoopForward;
             HeaderState(StRandom);
 
-            Task.Factory.StartNew(InterruptEndExecuteFindSong);
+            var newThreadFind = new Thread(InterruptEndExecuteFindSong);
+            newThreadFind.Start();
 
-            handlerEsc();
+            SongHandler(Random);
+
             FooterState();
             return new MenuPlay();
         }
 
-        private static void HandLoopForward()
-        {
-            do
-            {
-                SongHandler(CurrentPlaylist, Random);
-            } while (!ControlEvent);
-        }
 
         private static void InterruptEndExecuteFindSong()
         {
-            var cki = Console.ReadKey(true);
-            if (cki.Key == ConsoleKey.F)
-            {
-                while (Console.KeyAvailable) Console.ReadKey(false);
-                Console.Clear();
-                Console.WriteLine("******** Method Find **********");
-
-
-                ControlEvent = true;
-            }
+            while (Console.KeyAvailable) Console.ReadKey(false);
+            if (Console.ReadKey(false).Key == ConsoleKey.F) IsSeek = true;
         }
-
-        private delegate void HandlerEsc();
     }
 }
